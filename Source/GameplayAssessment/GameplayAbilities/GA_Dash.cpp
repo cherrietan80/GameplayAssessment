@@ -6,6 +6,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/RootMotionSource.h"
 #include "GameplayAbilities/GameAbilitiesGameplayTags.h"
+#include "Abilities/Tasks/AbilityTask_ApplyRootMotionConstantForce.h"
 
 UGA_Dash::UGA_Dash()
 {
@@ -32,16 +33,26 @@ void UGA_Dash::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FG
 		return;
 	}
 
-	TSharedPtr<FRootMotionSource_ConstantForce> Force = MakeShared<FRootMotionSource_ConstantForce>();
+	UAbilityTask_ApplyRootMotionConstantForce* Task =
+		UAbilityTask_ApplyRootMotionConstantForce::ApplyRootMotionConstantForce(
+			this,
+			NAME_None,
+			GetDashDirection(),
+			Strength,
+			Duration,
+			false,
+			nullptr,
+			ERootMotionFinishVelocityMode::ClampVelocity,
+			FVector::ZeroVector,
+			GetMaxSpeed(),
+			true
+		);
 
-	Force->Priority = 5;
-	Force->Duration = 0.2f;
-	Force->Force = GetDashDirection() * Strength;
-	Force->FinishVelocityParams.Mode = ERootMotionFinishVelocityMode::ClampVelocity;
-	Force->FinishVelocityParams.ClampVelocity = GetMaxSpeed();
-	Force->AccumulateMode = ERootMotionAccumulateMode::Additive;
-	MoveComp->ApplyRootMotionSource(Force);
-	EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
+	K2_AddGameplayCue(TAG_GameplayCue_Dash, FGameplayEffectContextHandle());
+
+	Task->OnFinish.AddDynamic(this, &UGA_Dash::OnDashFinished);
+
+	Task->ReadyForActivation();
 }
 
 FVector UGA_Dash::GetDashDirection() const
@@ -72,4 +83,9 @@ float UGA_Dash::GetMaxSpeed() const
 		}
 	}
 	return 500.0f;
+}
+
+void UGA_Dash::OnDashFinished()
+{
+	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
 }

@@ -1,3 +1,7 @@
 #include "GameplayAbilities/GameAbilitiesGameplayTags.h"
 
+//Gameplay Abilities Gameplay Tags
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Dash, "GameplayAbility.Movement.Dash");
+
+//Gameplay Cues Tags
+UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayCue_Dash, "GameplayCue.Dash");

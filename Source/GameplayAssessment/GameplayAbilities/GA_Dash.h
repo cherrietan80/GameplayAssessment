@@ -32,6 +32,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Dash")
 	float GetMaxSpeed() const;
 
+private:
+	UFUNCTION()
+	void OnDashFinished();
+
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Dash")
 	float Strength = 3000.0f;
