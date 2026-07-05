@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+#include "AbilitySystemInterface.h"
+#include "AbilitySystemComponent.h"
 #include "GameplayAssessmentCharacter.generated.h"
 
 class USpringArmComponent;
@@ -19,7 +21,7 @@ DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
  *  Implements a controllable orbiting camera
  */
 UCLASS(abstract)
-class AGameplayAssessmentCharacter : public ACharacter
+class AGameplayAssessmentCharacter : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -54,6 +56,9 @@ public:
 	/** Constructor */
 	AGameplayAssessmentCharacter();	
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySYstem")
+	UAbilitySystemComponent* AbilitySystemComponent;
+
 protected:
 
 	/** Initialize input action bindings */
@@ -66,6 +71,8 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+
+	virtual void PossessedBy(AController* NewController) override;
 
 public:
 
@@ -85,6 +92,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Input")
 	virtual void DoJumpEnd();
 
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
 public:
 
 	/** Returns CameraBoom subobject **/
@@ -93,4 +102,3 @@ public:
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 };
-

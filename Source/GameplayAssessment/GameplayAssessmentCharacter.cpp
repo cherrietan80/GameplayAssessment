@@ -12,7 +12,7 @@
 #include "InputActionValue.h"
 #include "GameplayAssessment.h"
 
-AGameplayAssessmentCharacter::AGameplayAssessmentCharacter()
+AGameplayAssessmentCharacter::AGameplayAssessmentCharacter() //constructor
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -48,6 +48,10 @@ AGameplayAssessmentCharacter::AGameplayAssessmentCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+
+	//Add the ability system component
+	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
+
 }
 
 void AGameplayAssessmentCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -90,6 +94,15 @@ void AGameplayAssessmentCharacter::Look(const FInputActionValue& Value)
 	DoLook(LookAxisVector.X, LookAxisVector.Y);
 }
 
+void AGameplayAssessmentCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+	if (AbilitySystemComponent)
+	{
+		AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	}
+}
+
 void AGameplayAssessmentCharacter::DoMove(float Right, float Forward)
 {
 	if (GetController() != nullptr)
@@ -130,4 +143,9 @@ void AGameplayAssessmentCharacter::DoJumpEnd()
 {
 	// signal the character to stop jumping
 	StopJumping();
+}
+
+UAbilitySystemComponent* AGameplayAssessmentCharacter::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
 }
