@@ -2,11 +2,8 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "BaseCharacter.h"
 #include "Logging/LogMacros.h"
-#include "AbilitySystemInterface.h"
-#include "AbilitySystemComponent.h"
 #include "GameplayAssessmentCharacter.generated.h"
 
 class USpringArmComponent;
@@ -21,7 +18,7 @@ DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
  *  Implements a controllable orbiting camera
  */
 UCLASS(abstract)
-class AGameplayAssessmentCharacter : public ACharacter, public IAbilitySystemInterface
+class AGameplayAssessmentCharacter : public ABaseCharacter
 {
 	GENERATED_BODY()
 
@@ -51,13 +48,16 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputAction* MouseLookAction;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* DashAction;
+
+	/** Gameplay initialization */
+	virtual void BeginPlay() override;
+
 public:
 
 	/** Constructor */
 	AGameplayAssessmentCharacter();	
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySYstem")
-	UAbilitySystemComponent* AbilitySystemComponent;
 
 protected:
 
@@ -72,27 +72,9 @@ protected:
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 
-	virtual void PossessedBy(AController* NewController) override;
-
 public:
-
-	/** Handles move inputs from either controls or UI interfaces */
-	UFUNCTION(BlueprintCallable, Category="Input")
-	virtual void DoMove(float Right, float Forward);
-
-	/** Handles look inputs from either controls or UI interfaces */
-	UFUNCTION(BlueprintCallable, Category="Input")
-	virtual void DoLook(float Yaw, float Pitch);
-
-	/** Handles jump pressed inputs from either controls or UI interfaces */
-	UFUNCTION(BlueprintCallable, Category="Input")
-	virtual void DoJumpStart();
-
-	/** Handles jump pressed inputs from either controls or UI interfaces */
-	UFUNCTION(BlueprintCallable, Category="Input")
-	virtual void DoJumpEnd();
-
-	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	UFUNCTION(BlueprintCallable, Category = "GameAbility")
+	void DoDash();
 
 public:
 

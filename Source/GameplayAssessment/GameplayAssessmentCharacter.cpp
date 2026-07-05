@@ -11,6 +11,14 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "GameplayAssessment.h"
+#include "GameplayAbilities/GameAbilitiesGameplayTags.h"
+
+
+void AGameplayAssessmentCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	GiveAbilities();
+}
 
 AGameplayAssessmentCharacter::AGameplayAssessmentCharacter() //constructor
 {
@@ -49,9 +57,6 @@ AGameplayAssessmentCharacter::AGameplayAssessmentCharacter() //constructor
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 
-	//Add the ability system component
-	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
-
 }
 
 void AGameplayAssessmentCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -69,6 +74,9 @@ void AGameplayAssessmentCharacter::SetupPlayerInputComponent(UInputComponent* Pl
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AGameplayAssessmentCharacter::Look);
+
+		//Dash
+		EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::DoDash);
 	}
 	else
 	{
@@ -94,58 +102,10 @@ void AGameplayAssessmentCharacter::Look(const FInputActionValue& Value)
 	DoLook(LookAxisVector.X, LookAxisVector.Y);
 }
 
-void AGameplayAssessmentCharacter::PossessedBy(AController* NewController)
+void AGameplayAssessmentCharacter::DoDash()
 {
-	Super::PossessedBy(NewController);
-	if (AbilitySystemComponent)
-	{
-		AbilitySystemComponent->InitAbilityActorInfo(this, this);
-	}
+	ABaseCharacter::ActivateAbilityByTag(TAG_Ability_Dash);
 }
 
-void AGameplayAssessmentCharacter::DoMove(float Right, float Forward)
-{
-	if (GetController() != nullptr)
-	{
-		// find out which way is forward
-		const FRotator Rotation = GetController()->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-		// get forward vector
-		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 
-		// get right vector 
-		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-
-		// add movement 
-		AddMovementInput(ForwardDirection, Forward);
-		AddMovementInput(RightDirection, Right);
-	}
-}
-
-void AGameplayAssessmentCharacter::DoLook(float Yaw, float Pitch)
-{
-	if (GetController() != nullptr)
-	{
-		// add yaw and pitch input to controller
-		AddControllerYawInput(Yaw);
-		AddControllerPitchInput(Pitch);
-	}
-}
-
-void AGameplayAssessmentCharacter::DoJumpStart()
-{
-	// signal the character to jump
-	Jump();
-}
-
-void AGameplayAssessmentCharacter::DoJumpEnd()
-{
-	// signal the character to stop jumping
-	StopJumping();
-}
-
-UAbilitySystemComponent* AGameplayAssessmentCharacter::GetAbilitySystemComponent() const
-{
-	return AbilitySystemComponent;
-}
