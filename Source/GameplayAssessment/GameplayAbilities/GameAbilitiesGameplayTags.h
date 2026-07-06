@@ -10,3 +10,6 @@ UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayCue_Dash);
 
 //Gameplay Effects Tags
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEffect_StaminaRegen);
+
+//Gameplay Events Tags
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEvent_AbilityChanged);

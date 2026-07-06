@@ -6,6 +6,7 @@
 #include "Abilities/GameplayAbility.h"
 #include "GameplayAbilities/GameAbilitiesGameplayTags.h"
 #include "AttributeSets/BasicAttributeSet.h"
+#include <AbilitySystemBlueprintLibrary.h>
 
 // Sets default values
 ABaseCharacter::ABaseCharacter()
@@ -100,6 +101,15 @@ void ABaseCharacter::GiveAbilities()
 			AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(AbilityClass, 1));
 		}
 	}
+
+	FGameplayEventData Data;
+	Data.EventTag = TAG_GameplayEvent_AbilityChanged;
+
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+		this,
+		Data.EventTag,
+		Data
+	);
 }
 
 void ABaseCharacter::ActivateAbilityByTag(FGameplayTag Tag)
