@@ -5,6 +5,7 @@
 #include "GameplayAbilitySpec.h"
 #include "Abilities/GameplayAbility.h"
 #include "GameplayAbilities/GameAbilitiesGameplayTags.h"
+#include "AttributeSets/BasicAttributeSet.h"
 
 // Sets default values
 ABaseCharacter::ABaseCharacter()
@@ -14,6 +15,7 @@ ABaseCharacter::ABaseCharacter()
 	//Add the ability system component
 	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
 
+	BasicAttributeSet = CreateDefaultSubobject<UBasicAttributeSet>(TEXT("BasicAttributeSet"));
 }
 
 // Called when the game starts or when spawned

@@ -12,12 +12,20 @@
 #include "InputActionValue.h"
 #include "GameplayAssessment.h"
 #include "GameplayAbilities/GameAbilitiesGameplayTags.h"
+#include "AttributeSets/BasicAttributeSet.h"
 
 
 void AGameplayAssessmentCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	GiveAbilities();
+	if (AbilitySystemComponent)
+	{
+		AbilitySystemComponent
+			->GetGameplayAttributeValueChangeDelegate(
+				UBasicAttributeSet::GetStaminaAttribute())
+			.AddUObject(this, &AGameplayAssessmentCharacter::OnStaminaChanged);
+	}
 }
 
 AGameplayAssessmentCharacter::AGameplayAssessmentCharacter() //constructor
@@ -57,6 +65,43 @@ AGameplayAssessmentCharacter::AGameplayAssessmentCharacter() //constructor
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 
+}
+
+void AGameplayAssessmentCharacter::OnStaminaChanged(const FOnAttributeChangeData& Data)
+{
+	const float OldStamina = Data.OldValue;
+	const float NewStamina = Data.NewValue;
+	const float MaxStamina = BasicAttributeSet->GetMaxStamina();
+
+	if(NewStamina < OldStamina)
+	{
+		FGameplayTagContainer Container;
+		Container.AddTag(TAG_GameplayEffect_StaminaRegen);
+
+		AbilitySystemComponent->RemoveActiveEffectsWithGrantedTags(Container);
+
+		GetWorld()->GetTimerManager().SetTimer(
+			StaminaRegenDelayTimer,
+			this,
+			&AGameplayAssessmentCharacter::StartStaminaRegen,
+			1.0f,
+			false
+		);
+		
+	}
+	else if(NewStamina >= MaxStamina)
+	{
+		FGameplayTagContainer Container;
+		Container.AddTag(TAG_GameplayEffect_StaminaRegen);
+
+		AbilitySystemComponent->RemoveActiveEffectsWithGrantedTags(Container);
+	}
+	
+}
+
+void AGameplayAssessmentCharacter::StartStaminaRegen()
+{
+	AbilitySystemComponent->ApplyGameplayEffectToSelf(StaminaRegenEffect.GetDefaultObject(), 1.0f, AbilitySystemComponent->MakeEffectContext());
 }
 
 void AGameplayAssessmentCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -106,6 +151,5 @@ void AGameplayAssessmentCharacter::DoDash()
 {
 	ABaseCharacter::ActivateAbilityByTag(TAG_Ability_Dash);
 }
-
 
 

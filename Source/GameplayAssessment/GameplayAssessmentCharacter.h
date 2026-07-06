@@ -54,10 +54,16 @@ protected:
 	/** Gameplay initialization */
 	virtual void BeginPlay() override;
 
+private:
+	FTimerHandle StaminaRegenDelayTimer;
+
 public:
 
 	/** Constructor */
 	AGameplayAssessmentCharacter();	
+
+private:
+	void OnStaminaChanged(const FOnAttributeChangeData& Data);
 
 protected:
 
@@ -75,6 +81,12 @@ protected:
 public:
 	UFUNCTION(BlueprintCallable, Category = "GameAbility")
 	void DoDash();
+
+	UFUNCTION(BlueprintCallable, Category = "GameAbility")
+	void StartStaminaRegen();
+
+	UPROPERTY(EditDefaultsOnly, Category = "AbilitySystem")
+	TSubclassOf<class UGameplayEffect> StaminaRegenEffect;
 
 public:
 

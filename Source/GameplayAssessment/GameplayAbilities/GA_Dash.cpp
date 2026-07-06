@@ -7,6 +7,7 @@
 #include "GameFramework/RootMotionSource.h"
 #include "GameplayAbilities/GameAbilitiesGameplayTags.h"
 #include "Abilities/Tasks/AbilityTask_ApplyRootMotionConstantForce.h"
+#include "AttributeSets/BasicAttributeSet.h"
 
 UGA_Dash::UGA_Dash()
 {
@@ -32,6 +33,8 @@ void UGA_Dash::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FG
 		EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
 		return;
 	}
+
+	CommitAbilityCost(Handle, ActorInfo, ActivationInfo);
 
 	UAbilityTask_ApplyRootMotionConstantForce* Task =
 		UAbilityTask_ApplyRootMotionConstantForce::ApplyRootMotionConstantForce(
@@ -87,5 +90,6 @@ float UGA_Dash::GetMaxSpeed() const
 
 void UGA_Dash::OnDashFinished()
 {
+	CommitAbilityCooldown(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, false, nullptr);
 	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
 }

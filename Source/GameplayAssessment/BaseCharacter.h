@@ -25,6 +25,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "AbilitySystem")
 	TArray<TSubclassOf<class UGameplayAbility>> Abilities;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
+	class UBasicAttributeSet* BasicAttributeSet;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -62,5 +65,4 @@ public:
 	void ActivateAbilityByTag(FGameplayTag Tag);
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
-
 };
