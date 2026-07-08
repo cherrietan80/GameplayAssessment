@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "GameplayAbilitySpec.h"
 #include "WeaponManagerComponent.generated.h"
 
 
@@ -33,16 +34,19 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void ToggleEquipWeapon(TSubclassOf<class ABaseWeapon> WeaponClass);
 
-public:
+protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon")
 	class ABaseWeapon* EquippedWeapon;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation")
 	TSubclassOf<class UAnimInstance> DefaultAnimBlueprint;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
+	TArray<FGameplayAbilitySpecHandle> GrantedAbilityHandles;
+
 private:
 	UPROPERTY()
-	ACharacter* OwnerCharacter;
+	class AGameplayAssessmentCharacter* OwnerCharacter;
 
 	
 

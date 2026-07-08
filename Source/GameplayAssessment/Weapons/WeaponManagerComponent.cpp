@@ -4,6 +4,7 @@
 #include "Weapons/WeaponManagerComponent.h"
 #include "Weapons/BaseWeapon.h"
 #include "GameFramework/Character.h"
+#include "GameplayAssessmentCharacter.h"
 
 // Sets default values for this component's properties
 UWeaponManagerComponent::UWeaponManagerComponent()
@@ -21,7 +22,7 @@ void UWeaponManagerComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	OwnerCharacter = Cast<ACharacter>(GetOwner());
+	OwnerCharacter = Cast<AGameplayAssessmentCharacter>(GetOwner());
 	
 }
 
@@ -67,6 +68,7 @@ void UWeaponManagerComponent::EquipWeapon(TSubclassOf<class ABaseWeapon> WeaponC
 		EquippedWeapon->GetWeaponConfig().SocketName
 	);
 	OwnerCharacter->GetMesh()->SetAnimInstanceClass(EquippedWeapon->GetWeaponConfig().AnimBlueprint);
+	GrantedAbilityHandles = OwnerCharacter->GiveAbilities(EquippedWeapon->GetWeaponConfig().Abilities);
 }
 
 void UWeaponManagerComponent::UnequipWeapon(TSubclassOf<class ABaseWeapon> WeaponClass)
@@ -74,6 +76,9 @@ void UWeaponManagerComponent::UnequipWeapon(TSubclassOf<class ABaseWeapon> Weapo
 	if (EquippedWeapon)
 	{
 		EquippedWeapon->Destroy();
+
+		OwnerCharacter->RemoveAbilities(GrantedAbilityHandles);
+
 		EquippedWeapon = nullptr;
 
 		OwnerCharacter->GetMesh()->SetAnimInstanceClass(DefaultAnimBlueprint);

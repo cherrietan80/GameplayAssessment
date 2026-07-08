@@ -7,6 +7,7 @@
 #include "GameplayAbilities/GameAbilitiesGameplayTags.h"
 #include "AttributeSets/BasicAttributeSet.h"
 #include <AbilitySystemBlueprintLibrary.h>
+#include <GameplayAbilities/BaseAbilitySystemComponent.h>
 
 // Sets default values
 ABaseCharacter::ABaseCharacter()
@@ -14,7 +15,7 @@ ABaseCharacter::ABaseCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	//Add the ability system component
-	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
+	AbilitySystemComponent = CreateDefaultSubobject<UBaseAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
 
 	BasicAttributeSet = CreateDefaultSubobject<UBasicAttributeSet>(TEXT("BasicAttributeSet"));
 }
@@ -47,6 +48,7 @@ void ABaseCharacter::PossessedBy(AController* NewController)
 	if (AbilitySystemComponent)
 	{
 		AbilitySystemComponent->InitAbilityActorInfo(this, this);
+		GiveAbilities(StartingAbilities);
 	}
 }
 
@@ -92,24 +94,46 @@ void ABaseCharacter::DoJumpEnd()
 	StopJumping();
 }
 
-void ABaseCharacter::GiveAbilities()
+TArray<FGameplayAbilitySpecHandle> ABaseCharacter::GiveAbilities(TArray<TSubclassOf<class UGameplayAbility>> AbilitiesToGranted)
 {
-	for (const TSubclassOf<UGameplayAbility>& AbilityClass : Abilities)
+	if (!AbilitySystemComponent)
 	{
-		if (AbilityClass)
+		return TArray<FGameplayAbilitySpecHandle>();
+	}
+	
+	TArray<FGameplayAbilitySpecHandle> GrantedHandles;
+
+	for (TSubclassOf<UGameplayAbility>Ability : AbilitiesToGranted)
+	{
+		if (Ability)
 		{
-			AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(AbilityClass, 1));
+			FGameplayAbilitySpecHandle SpecHandle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(Ability, 1));
+			GrantedHandles.Add(SpecHandle);
 		}
 	}
 
-	FGameplayEventData Data;
-	Data.EventTag = TAG_GameplayEvent_AbilityChanged;
+	SendAbilitiesChangedEvent();
 
-	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
-		this,
-		Data.EventTag,
-		Data
-	);
+	return GrantedHandles;
+}
+
+void ABaseCharacter::RemoveAbilities(TArray<FGameplayAbilitySpecHandle> AbilitiesToRemove)
+{
+	if (!AbilitySystemComponent)
+	{
+		return;
+	}
+
+	for(FGameplayAbilitySpecHandle Handle : AbilitiesToRemove)
+	{
+		if(Handle.IsValid())
+		{
+			AbilitySystemComponent->ClearAbility(Handle);
+
+		}
+	}
+
+	SendAbilitiesChangedEvent();
 }
 
 void ABaseCharacter::ActivateAbilityByTag(FGameplayTag Tag)
@@ -120,6 +144,20 @@ void ABaseCharacter::ActivateAbilityByTag(FGameplayTag Tag)
 	Container.AddTag(Tag);
 
 	AbilitySystemComponent->TryActivateAbilitiesByTag(Container);
+}
+
+void ABaseCharacter::SendAbilitiesChangedEvent()
+{
+	FGameplayEventData Data;
+	Data.EventTag = TAG_GameplayEvent_AbilityChanged;
+
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+		this,
+		Data.EventTag,
+		Data
+	);
+
+	UE_LOG(LogTemp, Display, TEXT("YesUI"));
 }
 
 UAbilitySystemComponent* ABaseCharacter::GetAbilitySystemComponent() const

@@ -4,13 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
+#include "GameplayAbilities/BaseGameplayAbility.h"
 #include "GA_EquipWeapon.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class GAMEPLAYASSESSMENT_API UGA_EquipWeapon : public UGameplayAbility
+class GAMEPLAYASSESSMENT_API UGA_EquipWeapon : public UBaseGameplayAbility
 {
 	GENERATED_BODY()
 

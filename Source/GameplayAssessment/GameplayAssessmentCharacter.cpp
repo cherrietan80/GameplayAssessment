@@ -19,7 +19,6 @@
 void AGameplayAssessmentCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	GiveAbilities();
 	if (AbilitySystemComponent)
 	{
 		AbilitySystemComponent

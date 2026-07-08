@@ -89,7 +89,7 @@ protected:
 	void Look(const FInputActionValue& Value);
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "GameAbility")
+	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
 	void DoDash();
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
@@ -98,7 +98,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void ToggleEquipWand();
 
-	UFUNCTION(BlueprintCallable, Category = "GameAbility")
+	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
 	void StartStaminaRegen();
 
 	UPROPERTY(EditDefaultsOnly, Category = "AbilitySystem")

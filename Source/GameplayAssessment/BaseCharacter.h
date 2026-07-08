@@ -24,7 +24,7 @@ protected:
 	UAbilitySystemComponent* AbilitySystemComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category = "AbilitySystem")
-	TArray<TSubclassOf<class UGameplayAbility>> Abilities;
+	TArray<TSubclassOf<class UGameplayAbility>> StartingAbilities;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
 	class UBasicAttributeSet* BasicAttributeSet;
@@ -59,11 +59,20 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void DoJumpEnd();
 
-	UFUNCTION(BlueprintCallable, Category = "GameAbility")
-	void GiveAbilities();
+	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
+	TArray<FGameplayAbilitySpecHandle> GiveAbilities(TArray<TSubclassOf<class UGameplayAbility>> AbilitiesToGranted);
 
-	UFUNCTION(BlueprintCallable, Category = "GameAbility")
+	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
+	void RemoveAbilities(TArray<FGameplayAbilitySpecHandle> AbilitiesToRemove);
+
+	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
 	void ActivateAbilityByTag(FGameplayTag Tag);
 
+	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
+	void SendAbilitiesChangedEvent();
+
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+
+
 };
