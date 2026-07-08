@@ -11,3 +11,8 @@ UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayEffect_StaminaRegen, "Status.Stamina.Regen");
 
 //Gameplay Events Tags
 UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayEvent_AbilityChanged, "Event.Abilities.Changed");
+UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayEvent_Weapon_Equip, "Event.Weapon.Equip");
+
+//Weapon Tags
+UE_DEFINE_GAMEPLAY_TAG(TAG_Weapon_Melee, "Weapon.Melee");
+UE_DEFINE_GAMEPLAY_TAG(TAG_Weapon_Wand, "Weapon.Wand");

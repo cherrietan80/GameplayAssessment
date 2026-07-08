@@ -19,6 +19,7 @@ public:
 	// Sets default values for this character's properties
 	ABaseCharacter();
 
+protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
 	UAbilitySystemComponent* AbilitySystemComponent;
 

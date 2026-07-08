@@ -13,6 +13,7 @@
 #include "GameplayAssessment.h"
 #include "GameplayAbilities/GameAbilitiesGameplayTags.h"
 #include "AttributeSets/BasicAttributeSet.h"
+#include <AbilitySystemBlueprintLibrary.h>
 
 
 void AGameplayAssessmentCharacter::BeginPlay()
@@ -64,6 +65,8 @@ AGameplayAssessmentCharacter::AGameplayAssessmentCharacter() //constructor
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+
+	WeaponManagerComponent = CreateDefaultSubobject<UWeaponManagerComponent>(TEXT("WeaponManagerComponent"));
 
 }
 
@@ -122,6 +125,12 @@ void AGameplayAssessmentCharacter::SetupPlayerInputComponent(UInputComponent* Pl
 
 		//Dash
 		EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::DoDash);
+
+		//Melee
+		EnhancedInputComponent->BindAction(MeleeAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::ToggleEquipMelee);
+
+		//Wand
+		EnhancedInputComponent->BindAction(WandAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::ToggleEquipWand);
 	}
 	else
 	{
@@ -150,6 +159,39 @@ void AGameplayAssessmentCharacter::Look(const FInputActionValue& Value)
 void AGameplayAssessmentCharacter::DoDash()
 {
 	ABaseCharacter::ActivateAbilityByTag(TAG_Ability_Dash);
+}
+
+void AGameplayAssessmentCharacter::ToggleEquipMelee()
+{
+	if (!WeaponManagerComponent)
+		return;
+
+	FGameplayEventData Data;
+	Data.EventTag = TAG_GameplayEvent_Weapon_Equip;
+	FGameplayEventData Payload;
+	Payload.TargetTags.AddTag(TAG_Weapon_Melee);
+
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+		this,
+		Data.EventTag,
+		Payload
+	);
+}
+
+void AGameplayAssessmentCharacter::ToggleEquipWand()
+{
+	if (!WeaponManagerComponent)
+		return;
+	FGameplayEventData Data;
+	Data.EventTag = TAG_GameplayEvent_Weapon_Equip;
+	FGameplayEventData Payload;
+	Payload.TargetTags.AddTag(TAG_Weapon_Wand);
+
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+		this,
+		Data.EventTag,
+		Payload
+	);
 }
 
 

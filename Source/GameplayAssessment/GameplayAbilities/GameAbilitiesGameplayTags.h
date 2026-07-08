@@ -13,3 +13,8 @@ UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEffect_StaminaRegen);
 
 //Gameplay Events Tags
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEvent_AbilityChanged);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEvent_Weapon_Equip);
+
+//Weapon Tags
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Weapon_Melee);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Weapon_Wand);

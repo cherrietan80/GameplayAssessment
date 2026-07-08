@@ -4,6 +4,7 @@
 
 #include "BaseCharacter.h"
 #include "Logging/LogMacros.h"
+#include <Weapons/WeaponManagerComponent.h>
 #include "GameplayAssessmentCharacter.generated.h"
 
 class USpringArmComponent;
@@ -51,6 +52,15 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* DashAction;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* MeleeAction;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* WandAction;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UWeaponManagerComponent* WeaponManagerComponent;
+
 	/** Gameplay initialization */
 	virtual void BeginPlay() override;
 
@@ -81,6 +91,12 @@ protected:
 public:
 	UFUNCTION(BlueprintCallable, Category = "GameAbility")
 	void DoDash();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void ToggleEquipMelee();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void ToggleEquipWand();
 
 	UFUNCTION(BlueprintCallable, Category = "GameAbility")
 	void StartStaminaRegen();
