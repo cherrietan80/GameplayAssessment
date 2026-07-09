@@ -34,6 +34,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void ToggleEquipWeapon(TSubclassOf<class ABaseWeapon> WeaponClass);
 
+	UFUNCTION(BlueprintPure, Category = "Weapon")
+	ABaseWeapon* GetEquippedWeapon() const { return EquippedWeapon; }
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon")
 	class ABaseWeapon* EquippedWeapon;

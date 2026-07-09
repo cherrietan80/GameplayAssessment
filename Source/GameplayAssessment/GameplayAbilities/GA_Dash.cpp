@@ -92,5 +92,5 @@ float UGA_Dash::GetMaxSpeed() const
 void UGA_Dash::OnDashFinished()
 {
 	CommitAbilityCooldown(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, false, nullptr);
-	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
+	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, false, false);
 }

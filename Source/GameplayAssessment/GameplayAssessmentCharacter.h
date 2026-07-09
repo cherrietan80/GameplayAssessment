@@ -58,6 +58,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* WandAction;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* MeleeSwingAttackAction;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UWeaponManagerComponent* WeaponManagerComponent;
 
@@ -92,6 +95,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
 	void DoDash();
 
+	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
+	void DoMeleeAttackSwing();
+
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void ToggleEquipMelee();
 
@@ -101,6 +107,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
 	void StartStaminaRegen();
 
+public:
 	UPROPERTY(EditDefaultsOnly, Category = "AbilitySystem")
 	TSubclassOf<class UGameplayEffect> StaminaRegenEffect;
 

@@ -62,6 +62,7 @@ void UWeaponManagerComponent::ToggleEquipWeapon(TSubclassOf<class ABaseWeapon> W
 void UWeaponManagerComponent::EquipWeapon(TSubclassOf<class ABaseWeapon> WeaponClass)
 {
 	EquippedWeapon = GetWorld()->SpawnActor<ABaseWeapon>(WeaponClass);
+	EquippedWeapon->SetInstigator(OwnerCharacter);
 	EquippedWeapon->AttachToComponent(
 		OwnerCharacter->GetMesh(),
 		FAttachmentTransformRules::SnapToTargetIncludingScale,

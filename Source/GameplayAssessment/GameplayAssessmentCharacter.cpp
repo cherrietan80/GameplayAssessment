@@ -13,7 +13,7 @@
 #include "GameplayAssessment.h"
 #include "GameplayAbilities/GameAbilitiesGameplayTags.h"
 #include "AttributeSets/BasicAttributeSet.h"
-#include <AbilitySystemBlueprintLibrary.h>
+#include "AbilitySystemBlueprintLibrary.h"
 
 
 void AGameplayAssessmentCharacter::BeginPlay()
@@ -66,6 +66,8 @@ AGameplayAssessmentCharacter::AGameplayAssessmentCharacter() //constructor
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 
 	WeaponManagerComponent = CreateDefaultSubobject<UWeaponManagerComponent>(TEXT("WeaponManagerComponent"));
+
+	GetCharacterMovement()->bAllowPhysicsRotationDuringAnimRootMotion = true;
 
 }
 
@@ -127,6 +129,7 @@ void AGameplayAssessmentCharacter::SetupPlayerInputComponent(UInputComponent* Pl
 
 		//Melee
 		EnhancedInputComponent->BindAction(MeleeAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::ToggleEquipMelee);
+		EnhancedInputComponent->BindAction(MeleeSwingAttackAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::DoMeleeAttackSwing);
 
 		//Wand
 		EnhancedInputComponent->BindAction(WandAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::ToggleEquipWand);
@@ -158,6 +161,11 @@ void AGameplayAssessmentCharacter::Look(const FInputActionValue& Value)
 void AGameplayAssessmentCharacter::DoDash()
 {
 	ABaseCharacter::ActivateAbilityByTag(TAG_Ability_Dash);
+}
+
+void AGameplayAssessmentCharacter::DoMeleeAttackSwing()
+{
+	ABaseCharacter::ActivateAbilityByTag(TAG_Ability_MeleeAttack_Swing);
 }
 
 void AGameplayAssessmentCharacter::ToggleEquipMelee()

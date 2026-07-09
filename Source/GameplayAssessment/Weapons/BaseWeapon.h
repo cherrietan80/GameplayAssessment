@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Data/WeaponData.h"
+#include "Abilities/GameplayAbilityTypes.h"
 
 #include "BaseWeapon.generated.h"
 
@@ -31,11 +32,32 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 	UStaticMeshComponent* WeaponMesh;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "HitScan")
+	USceneComponent* TraceStart;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "HitScan")
+	USceneComponent* TraceEnd;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon")
 	FWeaponConfig WeaponConfig;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "HitScan")
+	float HitScanRadius;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION(BlueprintCallable, Category = "HitScan")
+	void HitActor();
+
+	UFUNCTION(BlueprintCallable, Category = "HitScan")
+	void StartHitActor(FGameplayEventData Payload);
+
+	UFUNCTION(BlueprintCallable, Category = "HitScan")
+	void EndHitActor(FGameplayEventData Payload);
+
+private:
+	FTimerHandle HitScanTimer;
 
 };

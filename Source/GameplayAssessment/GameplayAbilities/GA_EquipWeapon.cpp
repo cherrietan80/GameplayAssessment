@@ -47,5 +47,5 @@ void UGA_EquipWeapon::ActivateAbility(const FGameplayAbilitySpecHandle Handle, c
 			}
 		}
 	}
-	EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
+	EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
 }
