@@ -130,6 +130,7 @@ void AGameplayAssessmentCharacter::SetupPlayerInputComponent(UInputComponent* Pl
 		//Melee
 		EnhancedInputComponent->BindAction(MeleeAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::ToggleEquipMelee);
 		EnhancedInputComponent->BindAction(MeleeSwingAttackAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::DoMeleeAttackSwing);
+		EnhancedInputComponent->BindAction(MeleeComboAttackAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::DoMeleeAttackCombo);
 
 		//Wand
 		EnhancedInputComponent->BindAction(WandAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::ToggleEquipWand);
@@ -166,6 +167,20 @@ void AGameplayAssessmentCharacter::DoDash()
 void AGameplayAssessmentCharacter::DoMeleeAttackSwing()
 {
 	ABaseCharacter::ActivateAbilityByTag(TAG_Ability_MeleeAttack_Swing);
+}
+
+void AGameplayAssessmentCharacter::DoMeleeAttackCombo()
+{
+	ABaseCharacter::ActivateAbilityByTag(TAG_Ability_MeleeAttack_Combo);
+
+	FGameplayEventData Data;
+	Data.EventTag = TAG_GameplayEvent_ContinueCombo_Input;
+
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+		this,
+		Data.EventTag,
+		Data
+	);
 }
 
 void AGameplayAssessmentCharacter::ToggleEquipMelee()

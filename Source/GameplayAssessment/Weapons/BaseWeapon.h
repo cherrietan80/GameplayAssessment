@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Data/WeaponData.h"
 #include "Abilities/GameplayAbilityTypes.h"
+#include "GameplayEffectTypes.h"
+#include "AbilitySystemComponent.h"
 
 #include "BaseWeapon.generated.h"
 
@@ -38,11 +40,14 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "HitScan")
 	USceneComponent* TraceEnd;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
 	FWeaponConfig WeaponConfig;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "HitScan")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "HitScan")
 	float HitScanRadius;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "HitScan")
+	TArray<AActor*> HitActors;
 
 public:	
 	// Called every frame
@@ -52,12 +57,16 @@ public:
 	void HitActor();
 
 	UFUNCTION(BlueprintCallable, Category = "HitScan")
-	void StartHitActor(FGameplayEventData Payload);
+	void StartHitActor();
 
 	UFUNCTION(BlueprintCallable, Category = "HitScan")
-	void EndHitActor(FGameplayEventData Payload);
+	void EndHitActor();
 
 private:
 	FTimerHandle HitScanTimer;
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Damage")
+	FGameplayEffectSpec EffectSpec;
 
 };

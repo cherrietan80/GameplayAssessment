@@ -157,7 +157,6 @@ void ABaseCharacter::SendAbilitiesChangedEvent()
 		Data
 	);
 
-	UE_LOG(LogTemp, Display, TEXT("YesUI"));
 }
 
 UAbilitySystemComponent* ABaseCharacter::GetAbilitySystemComponent() const

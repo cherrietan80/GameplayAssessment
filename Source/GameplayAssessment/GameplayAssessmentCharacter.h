@@ -61,6 +61,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* MeleeSwingAttackAction;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* MeleeComboAttackAction;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UWeaponManagerComponent* WeaponManagerComponent;
 
@@ -97,6 +100,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
 	void DoMeleeAttackSwing();
+
+	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
+	void DoMeleeAttackCombo();
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void ToggleEquipMelee();

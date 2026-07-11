@@ -3,7 +3,7 @@
 
 #include "Weapons/BaseWeapon.h"
 #include "Kismet/KismetSystemLibrary.h"
-#include "DrawDebugHelpers.h"
+#include "AbilitySystemBlueprintLibrary.h"
 
 // Sets default values
 ABaseWeapon::ABaseWeapon()
@@ -96,29 +96,21 @@ void ABaseWeapon::HitActor()
 
 			if (HitActor)
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Hit Actor: %s"), *HitActor->GetName());
+				UAbilitySystemComponent* AbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(HitActor);
+				if (!HitActors.Contains(HitActor) && AbilitySystemComponent)
+				{
+					HitActors.AddUnique(HitActor);
+					AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(EffectSpec);
+				}
 			}
 		}
 	}
-
-	UE_LOG(LogTemp, Warning, TEXT("Weapon Location: %s"), *GetActorLocation().ToString());
-	UE_LOG(LogTemp, Warning, TEXT("TraceStart Location: %s"), *Start.ToString());
-	UE_LOG(LogTemp, Warning, TEXT("TraceEnd Location: %s"), *End.ToString());
-
-	//DrawDebugSphere(
-	//	GetWorld(),
-	//	Start,
-	//	20.f,
-	//	12,
-	//	FColor::Red,
-	//	false,
-	//	5.f
-	//);
-	UE_LOG(LogTemp, Display, TEXT("diedei"));
 }
 
-void ABaseWeapon::StartHitActor(FGameplayEventData Payload)
+void ABaseWeapon::StartHitActor()
 {
+	HitActors.Empty();
+
 	GetWorld()->GetTimerManager().SetTimer(
 		HitScanTimer,
 		this,
@@ -128,7 +120,7 @@ void ABaseWeapon::StartHitActor(FGameplayEventData Payload)
 	);
 }
 
-void ABaseWeapon::EndHitActor(FGameplayEventData Payload)
+void ABaseWeapon::EndHitActor()
 {
 	GetWorld()->GetTimerManager().ClearTimer(
 		HitScanTimer

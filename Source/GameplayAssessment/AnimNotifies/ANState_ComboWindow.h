@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimNotifies/AnimNotifyState.h"
-#include "ANState_HitScanWindow.generated.h"
+#include "ANState_ComboWindow.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class GAMEPLAYASSESSMENT_API UANState_HitScanWindow : public UAnimNotifyState
+class GAMEPLAYASSESSMENT_API UANState_ComboWindow : public UAnimNotifyState
 {
 	GENERATED_BODY()
-
+	
 public:
 	virtual FString GetNotifyName_Implementation() const override;
 
@@ -27,5 +27,4 @@ public:
 		USkeletalMeshComponent* MeshComp,
 		UAnimSequenceBase* Animation
 	) override;
-	
 };
