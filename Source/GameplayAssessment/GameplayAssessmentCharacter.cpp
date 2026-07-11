@@ -14,6 +14,7 @@
 #include "GameplayAbilities/GameAbilitiesGameplayTags.h"
 #include "AttributeSets/BasicAttributeSet.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "Weapons/BaseWeapon_Ranged.h"
 
 
 void AGameplayAssessmentCharacter::BeginPlay()
@@ -26,6 +27,8 @@ void AGameplayAssessmentCharacter::BeginPlay()
 				UBasicAttributeSet::GetStaminaAttribute())
 			.AddUObject(this, &AGameplayAssessmentCharacter::OnStaminaChanged);
 	}
+	TargetLength = MaxLength;
+	TargetSocketOffset = FVector::ZeroVector;
 }
 
 AGameplayAssessmentCharacter::AGameplayAssessmentCharacter() //constructor
@@ -35,7 +38,7 @@ AGameplayAssessmentCharacter::AGameplayAssessmentCharacter() //constructor
 		
 	// Don't rotate when the controller rotates. Let that just affect the camera.
 	bUseControllerRotationPitch = false;
-	bUseControllerRotationYaw = false;
+	bUseControllerRotationYaw = true;
 	bUseControllerRotationRoll = false;
 
 	// Configure character movement
@@ -46,7 +49,7 @@ AGameplayAssessmentCharacter::AGameplayAssessmentCharacter() //constructor
 	// instead of recompiling to adjust them
 	GetCharacterMovement()->JumpZVelocity = 500.f;
 	GetCharacterMovement()->AirControl = 0.35f;
-	GetCharacterMovement()->MaxWalkSpeed = 500.f;
+	GetCharacterMovement()->MaxWalkSpeed = NormalMaxSpeed;
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
@@ -54,7 +57,7 @@ AGameplayAssessmentCharacter::AGameplayAssessmentCharacter() //constructor
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->TargetArmLength = 400.0f;
+	CameraBoom->TargetArmLength = MaxLength;
 	CameraBoom->bUsePawnControlRotation = true;
 
 	// Create a follow camera
@@ -69,6 +72,30 @@ AGameplayAssessmentCharacter::AGameplayAssessmentCharacter() //constructor
 
 	GetCharacterMovement()->bAllowPhysicsRotationDuringAnimRootMotion = true;
 
+}
+
+void AGameplayAssessmentCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (!FMath::IsNearlyEqual(CameraBoom->TargetArmLength, TargetLength, 0.1f))
+	{
+		CameraBoom->TargetArmLength = FMath::FInterpTo(
+			CameraBoom->TargetArmLength,
+			TargetLength,
+			DeltaTime,
+			8.f);
+	}
+
+	if (!CameraBoom->SocketOffset.Equals(TargetSocketOffset, 0.1f))
+	{
+		CameraBoom->SocketOffset = FMath::VInterpTo(
+			CameraBoom->SocketOffset,
+			TargetSocketOffset,
+			DeltaTime,
+			8.f
+		);
+	}
 }
 
 void AGameplayAssessmentCharacter::OnStaminaChanged(const FOnAttributeChangeData& Data)
@@ -108,6 +135,33 @@ void AGameplayAssessmentCharacter::StartStaminaRegen()
 	AbilitySystemComponent->ApplyGameplayEffectToSelf(StaminaRegenEffect.GetDefaultObject(), 1.0f, AbilitySystemComponent->MakeEffectContext());
 }
 
+void AGameplayAssessmentCharacter::EnterAimMode()
+{
+	GetCharacterMovement()->bOrientRotationToMovement = false;
+	GetCharacterMovement()->MaxWalkSpeed = AimedMaxSpeed;
+
+	TargetLength = MinLength;
+	TargetSocketOffset = AimedSocketOffset;
+
+	ABaseWeapon_Ranged* RangedWeapon = Cast<ABaseWeapon_Ranged>(WeaponManagerComponent->GetEquippedWeapon());
+	if (!RangedWeapon) return;
+	bIsAiming = true;
+	
+}
+
+void AGameplayAssessmentCharacter::ExitAimMode()
+{
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+	GetCharacterMovement()->MaxWalkSpeed = NormalMaxSpeed;
+
+	TargetLength = MaxLength;
+	TargetSocketOffset = FVector::ZeroVector;
+
+	ABaseWeapon_Ranged* RangedWeapon = Cast<ABaseWeapon_Ranged>(WeaponManagerComponent->GetEquippedWeapon());
+	if (!RangedWeapon) return;
+	bIsAiming = false;
+}
+
 void AGameplayAssessmentCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	// Set up action bindings
@@ -132,8 +186,12 @@ void AGameplayAssessmentCharacter::SetupPlayerInputComponent(UInputComponent* Pl
 		EnhancedInputComponent->BindAction(MeleeSwingAttackAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::DoMeleeAttackSwing);
 		EnhancedInputComponent->BindAction(MeleeComboAttackAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::DoMeleeAttackCombo);
 
-		//Wand
-		EnhancedInputComponent->BindAction(WandAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::ToggleEquipWand);
+		//Ranged
+		EnhancedInputComponent->BindAction(RangedAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::ToggleEquipRanged);
+		EnhancedInputComponent->BindAction(RangedShootAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::DoRangedShooting);
+		EnhancedInputComponent->BindAction(RangedAimAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::DoRangedAim);
+		EnhancedInputComponent->BindAction(RangedAimAction, ETriggerEvent::Completed, this, &AGameplayAssessmentCharacter::CancelRangedAim);
+		EnhancedInputComponent->BindAction(RangedReloadAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::DoRangedReload);
 	}
 	else
 	{
@@ -161,17 +219,17 @@ void AGameplayAssessmentCharacter::Look(const FInputActionValue& Value)
 
 void AGameplayAssessmentCharacter::DoDash()
 {
-	ABaseCharacter::ActivateAbilityByTag(TAG_Ability_Dash);
+	ActivateAbilityByTag(TAG_Ability_Dash);
 }
 
 void AGameplayAssessmentCharacter::DoMeleeAttackSwing()
 {
-	ABaseCharacter::ActivateAbilityByTag(TAG_Ability_MeleeAttack_Swing);
+	ActivateAbilityByTag(TAG_Ability_MeleeAttack_Swing);
 }
 
 void AGameplayAssessmentCharacter::DoMeleeAttackCombo()
 {
-	ABaseCharacter::ActivateAbilityByTag(TAG_Ability_MeleeAttack_Combo);
+	ActivateAbilityByTag(TAG_Ability_MeleeAttack_Combo);
 
 	FGameplayEventData Data;
 	Data.EventTag = TAG_GameplayEvent_ContinueCombo_Input;
@@ -181,6 +239,27 @@ void AGameplayAssessmentCharacter::DoMeleeAttackCombo()
 		Data.EventTag,
 		Data
 	);
+}
+
+void AGameplayAssessmentCharacter::DoRangedShooting()
+{
+	ActivateAbilityByTag(TAG_Ability_Ranged_Shoot);
+}
+
+void AGameplayAssessmentCharacter::DoRangedAim()
+{
+	ActivateAbilityByTag(TAG_Ability_Ranged_Aim);
+}
+
+void AGameplayAssessmentCharacter::CancelRangedAim()
+{
+	CancelAbilityByTag(TAG_Ability_Ranged_Aim);
+	UE_LOG(LogTemp, Warning, TEXT("CancelRangedAim called"));
+}
+
+void AGameplayAssessmentCharacter::DoRangedReload()
+{
+	ActivateAbilityByTag(TAG_Ability_Ranged_Reload);
 }
 
 void AGameplayAssessmentCharacter::ToggleEquipMelee()
@@ -200,14 +279,14 @@ void AGameplayAssessmentCharacter::ToggleEquipMelee()
 	);
 }
 
-void AGameplayAssessmentCharacter::ToggleEquipWand()
+void AGameplayAssessmentCharacter::ToggleEquipRanged()
 {
 	if (!WeaponManagerComponent)
 		return;
 	FGameplayEventData Data;
 	Data.EventTag = TAG_GameplayEvent_Weapon_Equip;
 	FGameplayEventData Payload;
-	Payload.TargetTags.AddTag(TAG_Weapon_Wand);
+	Payload.TargetTags.AddTag(TAG_Weapon_Ranged);
 
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
 		this,

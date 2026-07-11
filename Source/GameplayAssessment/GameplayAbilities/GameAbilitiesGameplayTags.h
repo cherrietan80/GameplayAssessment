@@ -4,9 +4,15 @@
 
 //Game Abilities Gameplay Tags
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Dash);
+//Melee
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_MeleeAttack_Swing);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_MeleeAttack_Combo);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_MeleeAttack_Base);
+//Ranged
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Ranged_Base);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Ranged_Shoot);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Ranged_Aim);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Ranged_Reload);
 
 //Gameplay Cues Tags
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayCue_Dash);
@@ -17,15 +23,20 @@ UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEffect_StaminaRegen);
 //Gameplay Events Tags
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEvent_AbilityChanged);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEvent_Weapon_Equip);
+//HitScan
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEvent_HitScan_Start);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEvent_HitScan_End);
+//MeleeCombo
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEvent_ContinueCombo_Start);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEvent_ContinueCombo_End);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEvent_ContinueCombo_Input);
+//Aim
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEvent_Aim_Start);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEvent_Aim_End);
 
 //Weapon Tags
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Weapon_Melee);
-UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Weapon_Wand);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Weapon_Ranged);
 
 //Data Tags
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Data_Damage);

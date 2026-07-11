@@ -69,6 +69,9 @@ public:
 	void ActivateAbilityByTag(FGameplayTag Tag);
 
 	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
+	void CancelAbilityByTag(FGameplayTag Tag);
+
+	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
 	void SendAbilitiesChangedEvent();
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;

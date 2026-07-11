@@ -8,6 +8,8 @@
 
 UGA_EquipWeapon::UGA_EquipWeapon()
 {
+	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
+
 	FAbilityTriggerData TriggerData;
 
 	TriggerData.TriggerTag = TAG_GameplayEvent_Weapon_Equip;
@@ -40,9 +42,9 @@ void UGA_EquipWeapon::ActivateAbility(const FGameplayAbilitySpecHandle Handle, c
 				{
 					WeaponManager->ToggleEquipWeapon(MeleeWeaponClass);
 				}
-				else if (TargetTag == TAG_Weapon_Wand)
+				else if (TargetTag == TAG_Weapon_Ranged)
 				{
-					WeaponManager->ToggleEquipWeapon(WandWeaponClass);
+					WeaponManager->ToggleEquipWeapon(RangedWeaponClass);
 				}
 			}
 		}

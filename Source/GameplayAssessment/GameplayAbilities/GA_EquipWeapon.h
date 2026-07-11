@@ -24,5 +24,5 @@ protected:
 	TSubclassOf<class ABaseWeapon> MeleeWeaponClass;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
-	TSubclassOf<class ABaseWeapon> WandWeaponClass;
+	TSubclassOf<class ABaseWeapon> RangedWeaponClass;
 };

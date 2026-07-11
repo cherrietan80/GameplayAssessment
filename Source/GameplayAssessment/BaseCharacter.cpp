@@ -146,6 +146,16 @@ void ABaseCharacter::ActivateAbilityByTag(FGameplayTag Tag)
 	AbilitySystemComponent->TryActivateAbilitiesByTag(Container);
 }
 
+void ABaseCharacter::CancelAbilityByTag(FGameplayTag Tag)
+{
+	if (!AbilitySystemComponent) return;
+
+	FGameplayTagContainer Container;
+	Container.AddTag(Tag);
+
+	AbilitySystemComponent->CancelAbilities(&Container);
+}
+
 void ABaseCharacter::SendAbilitiesChangedEvent()
 {
 	FGameplayEventData Data;
