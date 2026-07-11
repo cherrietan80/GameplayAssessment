@@ -14,6 +14,10 @@ UGA_Dash::UGA_Dash()
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
 	AbilityTags.AddTag(TAG_Ability_Dash);
 	bShouldShowInAbilityBar = true;
+
+	CancelAbilitiesWithTag.AddTag(TAG_Ability_Base);
+	BlockAbilitiesWithTag.AddTag(TAG_Ability_Base);
+
 }
 
 void UGA_Dash::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)

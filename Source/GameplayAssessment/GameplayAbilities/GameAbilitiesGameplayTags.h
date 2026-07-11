@@ -4,6 +4,7 @@
 
 //Game Abilities Gameplay Tags
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Dash);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Base);
 //Melee
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_MeleeAttack_Swing);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_MeleeAttack_Combo);

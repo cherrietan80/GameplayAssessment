@@ -2,6 +2,7 @@
 
 //Gameplay Abilities Gameplay Tags
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Dash, "GameplayAbility.Movement.Dash");
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Base, "GameplayAbility");
 //Melee
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Swing, "GameplayAbility.MeleeAttack.Swing");
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Combo, "GameplayAbility.MeleeAttack.Combo");
