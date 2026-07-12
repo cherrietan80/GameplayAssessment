@@ -31,4 +31,6 @@ public:
 		bool bReplicateEndAbility,
 		bool bWasCancelled
 	) override;
+
+	virtual void OnMontageInterrupted() override;
 };

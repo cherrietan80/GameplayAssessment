@@ -18,4 +18,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	bool bShouldShowInAbilityBar = false;
 	
+public:
+	UBaseGameplayAbility();
 };

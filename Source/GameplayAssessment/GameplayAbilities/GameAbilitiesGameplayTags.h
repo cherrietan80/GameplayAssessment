@@ -14,12 +14,17 @@ UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Ranged_Base);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Ranged_Shoot);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Ranged_Aim);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Ranged_Reload);
+//HitReaction
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_HitReaction);
+//Die
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Death);
 
 //Gameplay Cues Tags
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayCue_Dash);
 
 //Gameplay Effects Tags
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEffect_StaminaRegen);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEffect_HitReaction);
 
 //Gameplay Events Tags
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEvent_AbilityChanged);
@@ -41,3 +46,6 @@ UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Weapon_Ranged);
 
 //Data Tags
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Data_Damage);
+
+//State Tags
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_State_Death);

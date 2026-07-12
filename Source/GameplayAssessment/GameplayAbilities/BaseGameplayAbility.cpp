@@ -2,4 +2,9 @@
 
 
 #include "GameplayAbilities/BaseGameplayAbility.h"
+#include "GameAbilitiesGameplayTags.h"
 
+UBaseGameplayAbility::UBaseGameplayAbility()
+{
+	ActivationBlockedTags.AddTag(TAG_State_Death);
+}

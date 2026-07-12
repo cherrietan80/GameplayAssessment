@@ -15,6 +15,8 @@
 #include "AttributeSets/BasicAttributeSet.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "Weapons/BaseWeapon_Ranged.h"
+#include "Abilities/Tasks/AbilityTask_WaitGameplayTag.h"
+#include "Weapons/WeaponManagerComponent.h"
 
 
 void AGameplayAssessmentCharacter::BeginPlay()
@@ -67,8 +69,6 @@ AGameplayAssessmentCharacter::AGameplayAssessmentCharacter() //constructor
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
-
-	WeaponManagerComponent = CreateDefaultSubobject<UWeaponManagerComponent>(TEXT("WeaponManagerComponent"));
 
 	GetCharacterMovement()->bAllowPhysicsRotationDuringAnimRootMotion = true;
 

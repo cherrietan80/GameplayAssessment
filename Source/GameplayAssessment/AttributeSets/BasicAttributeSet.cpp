@@ -3,6 +3,7 @@
 
 #include "AttributeSets/BasicAttributeSet.h"
 #include "GameplayEffectExtension.h"
+#include "GameplayAbilities/GameAbilitiesGameplayTags.h"
 
 UBasicAttributeSet::UBasicAttributeSet()
 {
@@ -33,9 +34,31 @@ void UBasicAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallb
 	if(Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
 		SetHealth(GetHealth());
+
+		if (Data.EffectSpec.Def)
+		{
+			if (Data.EffectSpec.Def->GetAssetTags().HasTag(TAG_GameplayEffect_HitReaction))
+			{
+				FGameplayTagContainer Container;
+				Container.AddTag(TAG_Ability_HitReaction);
+				GetOwningAbilitySystemComponent()->TryActivateAbilitiesByTag(Container);
+			}
+		}
 	}
 	else if(Data.EvaluatedData.Attribute == GetStaminaAttribute())
 	{
 		SetStamina(GetStamina());
+	}
+}
+
+void UBasicAttributeSet::PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue)
+{
+	Super::PostAttributeBaseChange(Attribute, OldValue, NewValue);
+
+	if (Attribute == GetHealthAttribute() && NewValue <= 0.f)
+	{
+		FGameplayTagContainer Container;
+		Container.AddTag(TAG_Ability_Death);
+		GetOwningAbilitySystemComponent()->TryActivateAbilitiesByTag(Container);
 	}
 }

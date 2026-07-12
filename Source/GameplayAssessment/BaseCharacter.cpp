@@ -6,8 +6,11 @@
 #include "Abilities/GameplayAbility.h"
 #include "GameplayAbilities/GameAbilitiesGameplayTags.h"
 #include "AttributeSets/BasicAttributeSet.h"
-#include <AbilitySystemBlueprintLibrary.h>
-#include <GameplayAbilities/BaseAbilitySystemComponent.h>
+#include "AbilitySystemBlueprintLibrary.h"
+#include "GameplayAbilities/BaseAbilitySystemComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Weapons/WeaponManagerComponent.h"
 
 // Sets default values
 ABaseCharacter::ABaseCharacter()
@@ -18,6 +21,11 @@ ABaseCharacter::ABaseCharacter()
 	AbilitySystemComponent = CreateDefaultSubobject<UBaseAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
 
 	BasicAttributeSet = CreateDefaultSubobject<UBasicAttributeSet>(TEXT("BasicAttributeSet"));
+
+	AbilitySystemComponent->RegisterGameplayTagEvent(TAG_State_Death).
+		AddUObject(this, &ABaseCharacter::OnDeadTagChanged);
+
+	WeaponManagerComponent = CreateDefaultSubobject<UWeaponManagerComponent>(TEXT("WeaponManagerComponent"));
 }
 
 // Called when the game starts or when spawned
@@ -172,4 +180,24 @@ void ABaseCharacter::SendAbilitiesChangedEvent()
 UAbilitySystemComponent* ABaseCharacter::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
+}
+
+void ABaseCharacter::OnDeadTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
+{
+	if (NewCount > 0)
+	{
+		HandleDeath();
+	}
+}
+
+void ABaseCharacter::HandleDeath()
+{
+	GetMesh()->SetSimulatePhysics(true);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetCharacterMovement()->DisableMovement();
+
+	FVector Impulse = GetActorForwardVector() * -20000;
+	Impulse.Z = 15000;
+	GetMesh()->AddImpulseAtLocation(Impulse, GetActorLocation());
 }

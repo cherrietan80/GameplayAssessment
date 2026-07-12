@@ -69,3 +69,8 @@ void UGA_Ranged_Aim::EndAbility(const FGameplayAbilitySpecHandle Handle, const F
 
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 }
+
+void UGA_Ranged_Aim::OnMontageInterrupted()
+{
+
+}

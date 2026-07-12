@@ -12,12 +12,17 @@ UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Ranged_Base, "GameplayAbility.Ranged")
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Ranged_Shoot, "GameplayAbility.Ranged.Shoot")
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Ranged_Aim, "GameplayAbility.Ranged.Aim")
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Ranged_Reload, "GameplayAbility.Ranged.Reload")
+//HitReaction
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_HitReaction, "GameplayAbility.HitReaction");
+//Die
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Death, "GameplayAbility.Death");
 
 //Gameplay Cues Tags
 UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayCue_Dash, "GameplayCue.Dash");
 
 //Gameplay Effects Tags
 UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayEffect_StaminaRegen, "Status.Stamina.Regen");
+UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayEffect_HitReaction, "Effect.HitReaction");
 
 //Gameplay Events Tags
 UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayEvent_AbilityChanged, "Event.Abilities.Changed");
@@ -39,3 +44,6 @@ UE_DEFINE_GAMEPLAY_TAG(TAG_Weapon_Ranged, "Weapon.Ranged");
 
 //Data Tags
 UE_DEFINE_GAMEPLAY_TAG(TAG_Data_Damage, "Data.Damage");
+
+//State Tags
+UE_DEFINE_GAMEPLAY_TAG(TAG_State_Death, "State.Death");

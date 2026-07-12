@@ -4,19 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "GameplayAbilities/BaseGameplayAbility.h"
-#include "Weapons/BaseWeapon.h"
-#include "GA_Ranged_Base.generated.h"
+#include "GA_Death.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class GAMEPLAYASSESSMENT_API UGA_Ranged_Base : public UBaseGameplayAbility
+class GAMEPLAYASSESSMENT_API UGA_Death : public UBaseGameplayAbility
 {
 	GENERATED_BODY()
 
 public:
-	UGA_Ranged_Base();
+	UGA_Death();
 
 	virtual void ActivateAbility(
 		const FGameplayAbilitySpecHandle Handle,
@@ -24,16 +23,8 @@ public:
 		const FGameplayAbilityActivationInfo ActivationInfo,
 		const FGameplayEventData* TriggerEventData
 	) override;
-
-private:
-	virtual void OnMontageCompleted();
-	virtual void OnMontageInterrupted();
-	void OnMontageCancelled();
-
-protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Montage")
-	UAnimMontage* ActionMontage;
-
-	ABaseWeapon* EquippedWeapon;
 	
+protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Effect")
+	TSubclassOf<UGameplayEffect> DeathEffect;
 };

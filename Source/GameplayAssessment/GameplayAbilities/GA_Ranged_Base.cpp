@@ -26,6 +26,7 @@ void UGA_Ranged_Base::ActivateAbility(const FGameplayAbilitySpecHandle Handle, c
 	);
 
 	MontageTask->OnCompleted.AddDynamic(this, &UGA_Ranged_Base::OnMontageCompleted);
+	MontageTask->OnInterrupted.AddDynamic(this, &UGA_Ranged_Base::OnMontageInterrupted);
 	MontageTask->OnCancelled.AddDynamic(this, &UGA_Ranged_Base::OnMontageCancelled);
 
 	MontageTask->ReadyForActivation();
@@ -35,6 +36,12 @@ void UGA_Ranged_Base::OnMontageCompleted()
 {
 	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, false, false);
 }
+
+void UGA_Ranged_Base::OnMontageInterrupted()
+{
+	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, false, false);
+}
+
 
 void UGA_Ranged_Base::OnMontageCancelled()
 {

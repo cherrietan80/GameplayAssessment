@@ -4,7 +4,6 @@
 
 #include "BaseCharacter.h"
 #include "Logging/LogMacros.h"
-#include <Weapons/WeaponManagerComponent.h>
 #include "GameplayAssessmentCharacter.generated.h"
 
 class USpringArmComponent;
@@ -87,9 +86,6 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "CameraBoom")
 	FVector AimedSocketOffset = FVector(0.f, 50.f, 50.f);
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	UWeaponManagerComponent* WeaponManagerComponent;
 
 	/** Gameplay initialization */
 	virtual void BeginPlay() override;
