@@ -21,7 +21,8 @@ public class GameplayAssessment : ModuleRules
 			"Slate",
             "GameplayAbilities",
             "GameplayTags",
-            "GameplayTasks"
+            "GameplayTasks",
+            "NavigationSystem"
         });
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });

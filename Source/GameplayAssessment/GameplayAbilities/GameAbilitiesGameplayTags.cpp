@@ -7,6 +7,7 @@ UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Base, "GameplayAbility");
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Swing, "GameplayAbility.MeleeAttack.Swing");
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Combo, "GameplayAbility.MeleeAttack.Combo");
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Base, "GameplayAbility.MeleeAttack");
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Sweep, "GameplayAbility.MeleeAttack.Sweep");
 //Ranged
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Ranged_Base, "GameplayAbility.Ranged")
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Ranged_Shoot, "GameplayAbility.Ranged.Shoot")

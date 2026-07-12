@@ -22,7 +22,7 @@ void UWeaponManagerComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	OwnerCharacter = Cast<AGameplayAssessmentCharacter>(GetOwner());
+	OwnerCharacter = Cast<ABaseCharacter>(GetOwner());
 	
 }
 

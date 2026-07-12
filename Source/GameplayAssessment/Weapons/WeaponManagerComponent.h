@@ -49,7 +49,7 @@ protected:
 
 private:
 	UPROPERTY()
-	class AGameplayAssessmentCharacter* OwnerCharacter;
+	class ABaseCharacter* OwnerCharacter;
 
 	
 

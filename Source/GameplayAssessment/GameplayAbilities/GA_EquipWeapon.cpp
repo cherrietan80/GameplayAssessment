@@ -34,9 +34,8 @@ void UGA_EquipWeapon::ActivateAbility(const FGameplayAbilitySpecHandle Handle, c
 		if (TargetTag.IsValid())
 		{
 			UWeaponManagerComponent* WeaponManager = GetAvatarActorFromActorInfo()->GetComponentByClass<UWeaponManagerComponent>();
-			AGameplayAssessmentCharacter* Character = Cast<AGameplayAssessmentCharacter>(GetAvatarActorFromActorInfo());
 
-			if (WeaponManager && Character)
+			if (WeaponManager)
 			{
 				if (TargetTag == TAG_Weapon_Melee)
 				{
