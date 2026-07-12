@@ -17,7 +17,16 @@ AEnemySpawner::AEnemySpawner()
 void AEnemySpawner::BeginPlay()
 {
 	Super::BeginPlay();
-	SpawnEnemy();
+
+	FTimerHandle TimerHandle;
+
+	GetWorld()->GetTimerManager().SetTimer(
+		TimerHandle,
+		this,
+		&AEnemySpawner::SpawnEnemy,
+		0.1f,
+		false
+	);
 }
 
 void AEnemySpawner::SpawnEnemy()
@@ -32,10 +41,15 @@ void AEnemySpawner::SpawnEnemy()
 		SpawnLocation = GetActorLocation();
 	}
 
+	FActorSpawnParameters Params;
+
+	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
 	CurrentEnemy = GetWorld()->SpawnActor<AEnemyCharacter>(
 		EnemyClass,
 		SpawnLocation,
-		FRotator::ZeroRotator
+		FRotator::ZeroRotator,
+		Params
 	);
 
 	if (CurrentEnemy)
@@ -51,10 +65,10 @@ void AEnemySpawner::OnEnemyDeath()
 {
 	CurrentEnemy = nullptr;
 
-	FTimerHandle TimerHandle;
+	GetWorldTimerManager().ClearTimer(SpawnTimerHandle);
 
 	GetWorld()->GetTimerManager().SetTimer(
-		TimerHandle,
+		SpawnTimerHandle,
 		this,
 		&AEnemySpawner::SpawnEnemy,
 		1.f,

@@ -4,6 +4,7 @@
 #include "Weapons/BaseWeapon.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "GameplayAssessmentCharacter.h"
 
 // Sets default values
 ABaseWeapon::ABaseWeapon()
@@ -79,12 +80,9 @@ void ABaseWeapon::HitActor()
 		ObjectTypes,
 		false,
 		ActorsToIgnore,
-		EDrawDebugTrace::ForDuration,
+		EDrawDebugTrace::None,
 		OutHits,
-		true,
-		FLinearColor::Red,
-		FLinearColor::Green,
-		5.0f
+		true
 	);
 
 
@@ -101,6 +99,16 @@ void ABaseWeapon::HitActor()
 				{
 					HitActors.AddUnique(HitActor);
 					AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(EffectSpec);
+
+					AGameplayAssessmentCharacter* Character = Cast<AGameplayAssessmentCharacter>(OwnerActor);
+					if (Character)
+					{
+						Character->RegisterCombo();
+						if (Character->bIsCritical)
+						{
+							Character->OnCriticalHit.Broadcast();
+						}
+					}
 				}
 			}
 		}

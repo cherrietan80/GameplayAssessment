@@ -162,6 +162,30 @@ void AGameplayAssessmentCharacter::ExitAimMode()
 	bIsAiming = false;
 }
 
+void AGameplayAssessmentCharacter::RefreshComboTimer()
+{
+	GetWorldTimerManager().ClearTimer(ComboResetHandle);
+
+	GetWorldTimerManager().SetTimer(
+		ComboResetHandle,
+		this,
+		&AGameplayAssessmentCharacter::ResetComboCount,
+		ComboResetTime,
+		false);
+}
+
+void AGameplayAssessmentCharacter::ResetComboCount()
+{
+	ComboCount = 0;
+	OnComboCountChanged.Broadcast(ComboCount);
+}
+
+void AGameplayAssessmentCharacter::RegisterCombo()
+{
+	ComboCount++;
+	OnComboCountChanged.Broadcast(ComboCount);
+}
+
 void AGameplayAssessmentCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	// Set up action bindings
@@ -225,6 +249,7 @@ void AGameplayAssessmentCharacter::DoDash()
 void AGameplayAssessmentCharacter::DoMeleeAttackSwing()
 {
 	ActivateAbilityByTag(TAG_Ability_MeleeAttack_Swing);
+	RefreshComboTimer();
 }
 
 void AGameplayAssessmentCharacter::DoMeleeAttackCombo()
@@ -239,11 +264,14 @@ void AGameplayAssessmentCharacter::DoMeleeAttackCombo()
 		Data.EventTag,
 		Data
 	);
+
+	RefreshComboTimer();
 }
 
 void AGameplayAssessmentCharacter::DoRangedShooting()
 {
 	ActivateAbilityByTag(TAG_Ability_Ranged_Shoot);
+	RefreshComboTimer();
 }
 
 void AGameplayAssessmentCharacter::DoRangedAim()
@@ -254,7 +282,6 @@ void AGameplayAssessmentCharacter::DoRangedAim()
 void AGameplayAssessmentCharacter::CancelRangedAim()
 {
 	CancelAbilityByTag(TAG_Ability_Ranged_Aim);
-	UE_LOG(LogTemp, Warning, TEXT("CancelRangedAim called"));
 }
 
 void AGameplayAssessmentCharacter::DoRangedReload()

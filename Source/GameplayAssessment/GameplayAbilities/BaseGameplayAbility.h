@@ -17,6 +17,9 @@ class GAMEPLAYASSESSMENT_API UBaseGameplayAbility : public UGameplayAbility
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	bool bShouldShowInAbilityBar = false;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Name")
+	FString AbilityName;
 	
 public:
 	UBaseGameplayAbility();

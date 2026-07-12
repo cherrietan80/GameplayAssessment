@@ -8,6 +8,7 @@
 #include "GameplayAbilities/GameAbilitiesGameplayTags.h"
 #include "Abilities/Tasks/AbilityTask_ApplyRootMotionConstantForce.h"
 #include "AttributeSets/BasicAttributeSet.h"
+#include "BaseCharacter.h"
 
 UGA_Dash::UGA_Dash()
 {
@@ -61,6 +62,17 @@ void UGA_Dash::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FG
 	Task->OnFinish.AddDynamic(this, &UGA_Dash::OnDashFinished);
 
 	Task->ReadyForActivation();
+}
+
+void UGA_Dash::EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled)
+{
+	Super::EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
+
+	ABaseCharacter* Character = Cast<ABaseCharacter>(GetAvatarActorFromActorInfo());
+	if (Character)
+	{
+		Character->ActivateAbilityByTag(TAG_Ability_MeleeAttack_Swing);
+	}
 }
 
 FVector UGA_Dash::GetDashDirection() const

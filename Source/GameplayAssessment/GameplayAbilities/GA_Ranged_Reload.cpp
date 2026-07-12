@@ -9,6 +9,8 @@ UGA_Ranged_Reload::UGA_Ranged_Reload()
 {
 	AbilityTags.AddTag(TAG_Ability_Ranged_Reload);
 	bShouldShowInAbilityBar = true;
+	CancelAbilitiesWithTag.AddTag(TAG_Ability_Ranged_Shoot);
+	BlockAbilitiesWithTag.AddTag(TAG_Ability_Base);
 }
 
 void UGA_Ranged_Reload::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)

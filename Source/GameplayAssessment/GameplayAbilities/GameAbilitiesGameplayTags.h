@@ -22,6 +22,7 @@ UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Death);
 
 //Gameplay Cues Tags
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayCue_Dash);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayCue_Damage);
 
 //Gameplay Effects Tags
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEffect_StaminaRegen);

@@ -6,4 +6,5 @@
 UGA_MeleeAttack_AOESweep::UGA_MeleeAttack_AOESweep()
 {
 	AbilityTags.AddTag(TAG_Ability_MeleeAttack_Sweep);
+	bShouldShowInAbilityBar = false;
 }

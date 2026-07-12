@@ -22,6 +22,14 @@ protected:
 
 	virtual void CalculateDamageAmount() override;
 
+	virtual void EndAbility(
+		const FGameplayAbilitySpecHandle Handle,
+		const FGameplayAbilityActorInfo* ActorInfo,
+		const FGameplayAbilityActivationInfo ActivationInfo,
+		bool bReplicateEndAbility,
+		bool bWasCancelled
+	) override;
+
 private:
 	UPROPERTY()
 	bool bIsWithinComboWindow;

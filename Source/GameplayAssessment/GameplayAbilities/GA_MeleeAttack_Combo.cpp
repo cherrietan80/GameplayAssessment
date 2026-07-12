@@ -4,6 +4,7 @@
 #include "GameplayAbilities/GA_MeleeAttack_Combo.h"
 #include "GameAbilitiesGameplayTags.h"
 #include "Abilities/Tasks/AbilityTask_WaitGameplayEvent.h"
+#include "GameplayAssessmentCharacter.h"
 
 UGA_MeleeAttack_Combo::UGA_MeleeAttack_Combo()
 {
@@ -16,6 +17,12 @@ UGA_MeleeAttack_Combo::UGA_MeleeAttack_Combo()
 
 void UGA_MeleeAttack_Combo::MontageStart()
 {
+	AGameplayAssessmentCharacter* Character = Cast<AGameplayAssessmentCharacter>(GetAvatarActorFromActorInfo());
+	if (Character)
+	{
+		Character->bIsCritical = false;
+	}
+
 	ComboCount = 1;
 
 	// Now UAbilityTask_WaitGameplayEvent is recognized
@@ -58,11 +65,33 @@ void UGA_MeleeAttack_Combo::MontageStart()
 
 void UGA_MeleeAttack_Combo::CalculateDamageAmount()
 {
+	AGameplayAssessmentCharacter* Character = Cast<AGameplayAssessmentCharacter>(GetAvatarActorFromActorInfo());
+	if (Character)
+	{
+		Character->bIsCritical = false;
+	}
+
 	DamageAmount = BaseDamage;
 
 	if (ComboCount == 3)
 	{
 		DamageAmount = 2 * BaseDamage;
+
+		if (Character)
+		{
+			Character->bIsCritical = true;
+		}
+	}
+}
+
+void UGA_MeleeAttack_Combo::EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled)
+{
+	Super::EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
+
+	AGameplayAssessmentCharacter* Character = Cast<AGameplayAssessmentCharacter>(GetAvatarActorFromActorInfo());
+	if (Character)
+	{
+		Character->bIsCritical = false;
 	}
 }
 

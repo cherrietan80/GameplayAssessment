@@ -25,8 +25,11 @@ public:
 	) override;
 
 private:
+	UFUNCTION()
 	void OnMontageCompleted();
+	UFUNCTION()
 	void OnMontageInterrupted();
+	UFUNCTION()
 	void OnMontageCancelled();
 
 protected:

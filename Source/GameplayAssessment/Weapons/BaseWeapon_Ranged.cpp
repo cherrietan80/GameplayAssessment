@@ -56,23 +56,14 @@ void ABaseWeapon_Ranged::Fire()
 			if (AbilitySystemComponent)
 			{
 				AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(EffectSpec);
+
+				AGameplayAssessmentCharacter* Character = Cast<AGameplayAssessmentCharacter>(OwnerActor);
+				if (Character)
+				{
+					Character->RegisterCombo();
+				}
 			}
 		}
-	}
-
-	// Debug line
-	if (bHit)
-	{
-		// Hit point
-		DrawDebugSphere(
-			GetWorld(),
-			Hit.Location,
-			10.f,
-			12,
-			FColor::Red,
-			false,
-			3.f
-		);
 	}
 }
 
@@ -88,24 +79,17 @@ void ABaseWeapon_Ranged::CalculateStartAndEndPoint(AActor* OwnerActor)
 
 	if (Character->bIsAiming)
 	{
-		APlayerController* PlayerController = Cast<APlayerController>(
-			OwnerActor->GetInstigatorController()
-		);
+		APlayerController* PlayerController = Cast<APlayerController>(OwnerActor->GetInstigatorController());
 
 		if (!PlayerController)
 		{
 			return;
 		}
 
-
 		FVector CameraLocation;
 		FRotator CameraRotation;
 
-		PlayerController->GetPlayerViewPoint(
-			CameraLocation,
-			CameraRotation
-		);
-
+		PlayerController->GetPlayerViewPoint(CameraLocation,CameraRotation);
 
 		FVector CameraDirection = CameraRotation.Vector();
 

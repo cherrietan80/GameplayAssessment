@@ -20,6 +20,7 @@ UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Death, "GameplayAbility.Death");
 
 //Gameplay Cues Tags
 UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayCue_Dash, "GameplayCue.Dash");
+UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayCue_Damage, "GameplayCue.Damage.Burst");
 
 //Gameplay Effects Tags
 UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayEffect_StaminaRegen, "Status.Stamina.Regen");

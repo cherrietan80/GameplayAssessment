@@ -12,6 +12,8 @@ class UInputAction;
 struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnComboCountChanged, int, ComboCount);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnCriticalHit);
 
 /**
  *  A simple player-controllable third person character
@@ -87,11 +89,18 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "CameraBoom")
 	FVector AimedSocketOffset = FVector(0.f, 50.f, 50.f);
 
+	UPROPERTY(EditDefaultsOnly, Category = "AttackCombo")
+	int ComboCount = 0;
+
+	UPROPERTY(EditDefaultsOnly, Category = "AttackCombo")
+	float ComboResetTime = 3.f;
+
 	/** Gameplay initialization */
 	virtual void BeginPlay() override;
 
 private:
 	FTimerHandle StaminaRegenDelayTimer;
+	FTimerHandle ComboResetHandle;
 	float TargetLength;
 	FVector TargetSocketOffset;
 
@@ -154,12 +163,30 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Ranged")
 	void ExitAimMode();
 
+	UFUNCTION(BlueprintCallable, Category = "AttackCombo")
+	void RefreshComboTimer();
+
+	UFUNCTION(BlueprintCallable, Category = "AttackCombo")
+	void ResetComboCount();
+
+	UFUNCTION(BlueprintCallable, Category = "AttackCombo")
+	void RegisterCombo();
+
 public:
 	UPROPERTY(EditDefaultsOnly, Category = "AbilitySystem")
 	TSubclassOf<class UGameplayEffect> StaminaRegenEffect;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ranged")
 	bool bIsAiming = false;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnComboCountChanged OnComboCountChanged;
+
+	UPROPERTY(BlueprintAssignable, Category = "CriticalHit")
+	FOnCriticalHit OnCriticalHit;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CriticalHit")
+	bool bIsCritical = false;
 
 public:
 
