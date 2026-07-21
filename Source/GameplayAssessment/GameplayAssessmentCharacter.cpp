@@ -209,6 +209,7 @@ void AGameplayAssessmentCharacter::SetupPlayerInputComponent(UInputComponent* Pl
 		EnhancedInputComponent->BindAction(MeleeAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::ToggleEquipMelee);
 		EnhancedInputComponent->BindAction(MeleeSwingAttackAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::DoMeleeAttackSwing);
 		EnhancedInputComponent->BindAction(MeleeComboAttackAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::DoMeleeAttackCombo);
+		EnhancedInputComponent->BindAction(MeleeOmniAttackAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::DoMeleeAttackOmni);
 
 		//Ranged
 		EnhancedInputComponent->BindAction(RangedAction, ETriggerEvent::Started, this, &AGameplayAssessmentCharacter::ToggleEquipRanged);
@@ -265,6 +266,12 @@ void AGameplayAssessmentCharacter::DoMeleeAttackCombo()
 		Data
 	);
 
+	RefreshComboTimer();
+}
+
+void AGameplayAssessmentCharacter::DoMeleeAttackOmni()
+{
+	ActivateAbilityByTag(TAG_Ability_MeleeAttack_Omni);
 	RefreshComboTimer();
 }
 

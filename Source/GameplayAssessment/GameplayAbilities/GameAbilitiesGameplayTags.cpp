@@ -14,6 +14,8 @@ UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Combo_Active, "GameplayAbility.Me
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Base, "GameplayAbility.MeleeAttack");
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Sweep, "GameplayAbility.MeleeAttack.Sweep");
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Sweep_Active, "GameplayAbility.MeleeAttack.Sweep.Active");
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Omni, "GameplayAbility.MeleeAttack.Omni");
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Omni_Active, "GameplayAbility.MeleeAttack.Omni.Active");
 //Ranged
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Ranged_Base, "GameplayAbility.Ranged")
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Ranged_Shoot, "GameplayAbility.Ranged.Shoot")

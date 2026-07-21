@@ -15,6 +15,8 @@ UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_MeleeAttack_Combo_Active);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_MeleeAttack_Base);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_MeleeAttack_Sweep);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_MeleeAttack_Sweep_Active);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_MeleeAttack_Omni);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_MeleeAttack_Omni_Active);
 //Ranged
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Ranged_Base);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Ranged_Shoot);

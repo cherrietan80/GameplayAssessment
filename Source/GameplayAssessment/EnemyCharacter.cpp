@@ -8,6 +8,7 @@
 #include "Components/WidgetComponent.h"
 #include "Weapons/WeaponManagerComponent.h"
 #include "Weapons/BaseWeapon.h"
+#include "AttributeSets/BasicAttributeSet.h"
 
 AEnemyCharacter::AEnemyCharacter()
 {
@@ -18,7 +19,8 @@ AEnemyCharacter::AEnemyCharacter()
 void AEnemyCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-	UE_LOG(LogTemp, Warning, TEXT("PossessedBy Called"));
+	BasicAttributeSet->SetHealth(500.f);
+	BasicAttributeSet->SetMaxHealth(500.f);
 	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &AEnemyCharacter::EquipWeapon);
 
 	GetWorldTimerManager().SetTimer(

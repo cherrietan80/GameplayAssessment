@@ -66,6 +66,9 @@ protected:
 	UInputAction* MeleeComboAttackAction;
 
 	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* MeleeOmniAttackAction;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* RangedShootAction;
 
 	UPROPERTY(EditAnywhere, Category = "Input")
@@ -135,6 +138,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
 	void DoMeleeAttackCombo();
+
+	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
+	void DoMeleeAttackOmni();
 
 	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
 	void DoRangedShooting();
