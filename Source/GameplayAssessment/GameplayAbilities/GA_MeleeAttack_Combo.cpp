@@ -9,6 +9,8 @@
 UGA_MeleeAttack_Combo::UGA_MeleeAttack_Combo()
 {
 	AbilityTags.AddTag(TAG_Ability_MeleeAttack_Combo);
+	ActivationOwnedTags.AddTag(TAG_Ability_MeleeAttack_Combo_Active);
+	ActiveUITag = TAG_Ability_MeleeAttack_Combo_Active;
 	CancelAbilitiesWithTag.AddTag(TAG_Ability_MeleeAttack_Swing);
 	BlockAbilitiesWithTag.AddTag(TAG_Ability_MeleeAttack_Swing);
 	BlockAbilitiesWithTag.AddTag(TAG_Ability_HitReaction);

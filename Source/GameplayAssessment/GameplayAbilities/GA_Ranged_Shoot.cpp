@@ -9,6 +9,8 @@
 UGA_Ranged_Shoot::UGA_Ranged_Shoot()
 {
 	AbilityTags.AddTag(TAG_Ability_Ranged_Shoot);
+	ActivationOwnedTags.AddTag(TAG_Ability_Ranged_Shoot_Active);
+	ActiveUITag = TAG_Ability_Ranged_Shoot_Active;
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerExecution;
 	bShouldShowInAbilityBar = true;
 }

@@ -10,6 +10,8 @@
 UGA_Ranged_Aim::UGA_Ranged_Aim()
 {
 	AbilityTags.AddTag(TAG_Ability_Ranged_Aim);
+	ActivationOwnedTags.AddTag(TAG_Ability_Ranged_Aim_Active);
+	ActiveUITag = TAG_Ability_Ranged_Aim_Active;
 	bShouldShowInAbilityBar = true;
 }
 

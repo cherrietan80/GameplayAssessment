@@ -1,22 +1,33 @@
 #include "GameplayAbilities/GameAbilitiesGameplayTags.h"
 
 //Gameplay Abilities Gameplay Tags
-UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Dash, "GameplayAbility.Movement.Dash");
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Base, "GameplayAbility");
+//Dash
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Dash, "GameplayAbility.Movement.Dash");
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Dash_Active, "GameplayAbility.Movement.Dash.Active");
+
 //Melee
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Swing, "GameplayAbility.MeleeAttack.Swing");
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Swing_Active, "GameplayAbility.MeleeAttack.Swing.Active");
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Combo, "GameplayAbility.MeleeAttack.Combo");
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Combo_Active, "GameplayAbility.MeleeAttack.Combo.Active");
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Base, "GameplayAbility.MeleeAttack");
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Sweep, "GameplayAbility.MeleeAttack.Sweep");
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Sweep_Active, "GameplayAbility.MeleeAttack.Sweep.Active");
 //Ranged
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Ranged_Base, "GameplayAbility.Ranged")
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Ranged_Shoot, "GameplayAbility.Ranged.Shoot")
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Ranged_Shoot_Active, "GameplayAbility.Ranged.Shoot.Active")
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Ranged_Aim, "GameplayAbility.Ranged.Aim")
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Ranged_Aim_Active, "GameplayAbility.Ranged.Aim.Active")
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Ranged_Reload, "GameplayAbility.Ranged.Reload")
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Ranged_Reload_Active, "GameplayAbility.Ranged.Reload.Active")
 //HitReaction
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_HitReaction, "GameplayAbility.HitReaction");
 //Die
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Death, "GameplayAbility.Death");
+//Active
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Active, "GameplayAbility.Active");
 
 //Gameplay Cues Tags
 UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayCue_Dash, "GameplayCue.Dash");

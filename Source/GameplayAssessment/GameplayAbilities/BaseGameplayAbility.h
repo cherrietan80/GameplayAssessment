@@ -18,6 +18,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	bool bShouldShowInAbilityBar = false;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
+	FGameplayTag ActiveUITag;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Name")
 	FString AbilityName;
 	

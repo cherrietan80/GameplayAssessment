@@ -8,6 +8,8 @@
 UGA_Ranged_Reload::UGA_Ranged_Reload()
 {
 	AbilityTags.AddTag(TAG_Ability_Ranged_Reload);
+	ActivationOwnedTags.AddTag(TAG_Ability_Ranged_Reload_Active);
+	ActiveUITag = TAG_Ability_Ranged_Reload_Active;
 	bShouldShowInAbilityBar = true;
 	CancelAbilitiesWithTag.AddTag(TAG_Ability_Ranged_Shoot);
 	BlockAbilitiesWithTag.AddTag(TAG_Ability_Base);

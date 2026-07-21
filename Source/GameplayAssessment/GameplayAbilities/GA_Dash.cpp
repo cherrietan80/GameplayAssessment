@@ -18,7 +18,8 @@ UGA_Dash::UGA_Dash()
 
 	CancelAbilitiesWithTag.AddTag(TAG_Ability_Base);
 	BlockAbilitiesWithTag.AddTag(TAG_Ability_Base);
-
+	ActivationOwnedTags.AddTag(TAG_Ability_Dash_Active);
+	ActiveUITag = TAG_Ability_Dash_Active;
 }
 
 void UGA_Dash::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)

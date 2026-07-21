@@ -3,22 +3,32 @@
 #include "NativeGameplayTags.h"
 
 //Game Abilities Gameplay Tags
-UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Dash);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Base);
+//Dash
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Dash);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Dash_Active);
 //Melee
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_MeleeAttack_Swing);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_MeleeAttack_Swing_Active);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_MeleeAttack_Combo);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_MeleeAttack_Combo_Active);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_MeleeAttack_Base);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_MeleeAttack_Sweep);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_MeleeAttack_Sweep_Active);
 //Ranged
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Ranged_Base);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Ranged_Shoot);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Ranged_Shoot_Active);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Ranged_Aim);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Ranged_Aim_Active);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Ranged_Reload);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Ranged_Reload_Active);
 //HitReaction
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_HitReaction);
 //Die
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Death);
+//Active
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Ability_Active);
 
 //Gameplay Cues Tags
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayCue_Dash);

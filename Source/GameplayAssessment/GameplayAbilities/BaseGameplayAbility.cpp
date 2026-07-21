@@ -7,4 +7,5 @@
 UBaseGameplayAbility::UBaseGameplayAbility()
 {
 	ActivationBlockedTags.AddTag(TAG_State_Death);
+	ActivationOwnedTags.AddTag(TAG_Ability_Active);
 }
