@@ -5,6 +5,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "GameplayAssessmentCharacter.h"
+#include "GameplayAbilities/GameAbilitiesGameplayTags.h"
 
 // Sets default values
 ABaseWeapon::ABaseWeapon()
@@ -24,6 +25,8 @@ ABaseWeapon::ABaseWeapon()
 
 	TraceEnd = CreateDefaultSubobject<USceneComponent>(TEXT("TraceEnd"));
 	TraceEnd->SetupAttachment(WeaponMesh);
+
+	CurrentHitEventTag = TAG_Ability_HitReaction;
 }
 
 FWeaponConfig ABaseWeapon::GetWeaponConfig() const
@@ -99,6 +102,16 @@ void ABaseWeapon::HitActor()
 				{
 					HitActors.AddUnique(HitActor);
 					AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(EffectSpec);
+
+					FGameplayEventData EventData;
+					EventData.Instigator = OwnerActor;
+					EventData.Target = HitActor;
+
+					UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+						OwnerActor,
+						CurrentHitEventTag,
+						EventData
+					);
 
 					AGameplayAssessmentCharacter* Character = Cast<AGameplayAssessmentCharacter>(OwnerActor);
 					if (Character)

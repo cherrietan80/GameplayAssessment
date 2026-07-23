@@ -25,6 +25,9 @@ ABaseCharacter::ABaseCharacter()
 	AbilitySystemComponent->RegisterGameplayTagEvent(TAG_State_Death).
 		AddUObject(this, &ABaseCharacter::OnDeadTagChanged);
 
+	AbilitySystemComponent->RegisterGameplayTagEvent(TAG_State_Air).
+		AddUObject(this, &ABaseCharacter::OnAirTagChanged);
+
 	WeaponManagerComponent = CreateDefaultSubobject<UWeaponManagerComponent>(TEXT("WeaponManagerComponent"));
 }
 
@@ -187,6 +190,26 @@ void ABaseCharacter::OnDeadTagChanged(const FGameplayTag CallbackTag, int32 NewC
 	if (NewCount > 0)
 	{
 		HandleDeath();
+	}
+}
+
+void ABaseCharacter::OnAirTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
+{
+	if (NewCount > 0)
+	{
+		// Enter airborne
+		LaunchCharacter(FVector(0, 0, 800), false, true);
+
+		GetCharacterMovement()->GravityScale = 0.f;
+		GetCharacterMovement()->SetMovementMode(MOVE_Flying);
+		GetCharacterMovement()->StopMovementImmediately();
+	}
+	else
+	{
+		// Leave airborne
+		GetCharacterMovement()->GravityScale = 1.f;
+		GetCharacterMovement()->SetMovementMode(MOVE_Falling);
+		LaunchCharacter(FVector(0, 0, -1200), false, true);
 	}
 }
 

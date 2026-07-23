@@ -16,6 +16,8 @@ UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Sweep, "GameplayAbility.MeleeAtta
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Sweep_Active, "GameplayAbility.MeleeAttack.Sweep.Active");
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Omni, "GameplayAbility.MeleeAttack.Omni");
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_Omni_Active, "GameplayAbility.MeleeAttack.Omni.Active");
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_AirCombo, "GameplayAbility.MeleeAttack.AirCombo");
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_MeleeAttack_AirCombo_Active, "GameplayAbility.MeleeAttack.AirCombo.Active");
 //Ranged
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Ranged_Base, "GameplayAbility.Ranged")
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Ranged_Shoot, "GameplayAbility.Ranged.Shoot")
@@ -52,6 +54,9 @@ UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayEvent_ContinueCombo_Input, "Event.ContinuComb
 //Aim
 UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayEvent_Aim_Start, "Event.Aim.Start");
 UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayEvent_Aim_End, "Event.Aim.End");
+//HitType
+UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayEvent_Hit_Air, "Event.Hit.Air");
+UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayEvent_Hit_Strong, "Event.Hit.Strong");
 
 //Weapon Tags
 UE_DEFINE_GAMEPLAY_TAG(TAG_Weapon_Melee, "Weapon.Melee");
@@ -62,3 +67,4 @@ UE_DEFINE_GAMEPLAY_TAG(TAG_Data_Damage, "Data.Damage");
 
 //State Tags
 UE_DEFINE_GAMEPLAY_TAG(TAG_State_Death, "State.Death");
+UE_DEFINE_GAMEPLAY_TAG(TAG_State_Air, "State.Air");

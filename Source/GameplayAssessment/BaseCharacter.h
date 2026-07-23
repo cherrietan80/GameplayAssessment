@@ -40,6 +40,8 @@ protected:
 
 	virtual void OnDeadTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
 
+	virtual void OnAirTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
+
 	virtual void HandleDeath();
 
 public:	

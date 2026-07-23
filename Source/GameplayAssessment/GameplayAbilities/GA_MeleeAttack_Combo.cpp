@@ -14,7 +14,6 @@ UGA_MeleeAttack_Combo::UGA_MeleeAttack_Combo()
 	CancelAbilitiesWithTag.AddTag(TAG_Ability_MeleeAttack_Swing);
 	BlockAbilitiesWithTag.AddTag(TAG_Ability_MeleeAttack_Swing);
 	BlockAbilitiesWithTag.AddTag(TAG_Ability_HitReaction);
-	BaseDamage = DamageAmount;
 }
 
 void UGA_MeleeAttack_Combo::MontageStart()
@@ -27,7 +26,6 @@ void UGA_MeleeAttack_Combo::MontageStart()
 
 	ComboCount = 1;
 
-	// Now UAbilityTask_WaitGameplayEvent is recognized
 	UAbilityTask_WaitGameplayEvent* ContinueComboDetecBeginTask = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(
 		this,
 		TAG_GameplayEvent_ContinueCombo_Start
@@ -73,11 +71,11 @@ void UGA_MeleeAttack_Combo::CalculateDamageAmount()
 		Character->bIsCritical = false;
 	}
 
-	DamageAmount = BaseDamage;
+	DamageAmount = BaseDamageAmount;
 
 	if (ComboCount == 3)
 	{
-		DamageAmount = 2 * BaseDamage;
+		DamageAmount = 2 * BaseDamageAmount;
 
 		if (Character)
 		{

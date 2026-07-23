@@ -69,4 +69,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Damage")
 	FGameplayEffectSpec EffectSpec;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Damage")
+	FGameplayTag CurrentHitEventTag;
+
+
 };

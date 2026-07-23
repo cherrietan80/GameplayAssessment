@@ -51,6 +51,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
 	float DamageAmount = -25.f;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
+	float BaseDamageAmount = -25.f;
+
 private:
 	UFUNCTION()
 	void OnMontageCompleted();

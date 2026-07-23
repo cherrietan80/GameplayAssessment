@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimNotifies/AnimNotifyState.h"
+#include "GameplayTagContainer.h"
 #include "ANState_HitScanWindow.generated.h"
 
 /**
@@ -28,4 +29,8 @@ public:
 		UAnimSequenceBase* Animation
 	) override;
 	
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Hit Scan")
+	FGameplayTag HitEventTag;
+
 };

@@ -131,6 +131,14 @@ void UGA_MeleeAttack_Base::MontageStart()
 
 void UGA_MeleeAttack_Base::CalculateDamageAmount()
 {
+	if (EquippedWeapon)
+	{
+		DamageAmount = BaseDamageAmount;
+		if (EquippedWeapon->CurrentHitEventTag == TAG_GameplayEvent_Hit_Strong)
+		{
+			DamageAmount = BaseDamageAmount * 2;
+		}
+	}
 }
 
 void UGA_MeleeAttack_Base::OnMontageCompleted()
