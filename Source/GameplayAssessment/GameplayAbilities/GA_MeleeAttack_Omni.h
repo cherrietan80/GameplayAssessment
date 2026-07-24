@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameplayAbilities/GA_MeleeAttack_Base.h"
+
 #include "GA_MeleeAttack_Omni.generated.h"
 
 /**
@@ -32,5 +33,14 @@ protected:
 		bool bReplicateEndAbility,
 		bool bWasCancelled
 	) override;
+
+private:
+	class AEnemyCharacter* FindNearestEnemy();
+
+	void MovetoNearestEnemy();
+
+protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Target")
+	TSubclassOf<class AEnemyCharacter> TargetClass;
 	
 };

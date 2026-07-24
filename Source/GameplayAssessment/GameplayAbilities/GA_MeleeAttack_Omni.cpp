@@ -4,6 +4,8 @@
 #include "GameFramework/Character.h"
 #include "GameAbilitiesGameplayTags.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "EnemyCharacter.h"
 
 UGA_MeleeAttack_Omni::UGA_MeleeAttack_Omni()
 {
@@ -34,7 +36,14 @@ void UGA_MeleeAttack_Omni::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 		return;
 	}
 
-	Movement->DisableMovement();
+	MovetoNearestEnemy();
+
+	APlayerController* PC = Cast<APlayerController>(Character->GetController());
+
+	if (PC)
+	{
+		PC->SetIgnoreMoveInput(true);
+	}
 
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 }
@@ -46,10 +55,59 @@ void UGA_MeleeAttack_Omni::EndAbility(const FGameplayAbilitySpecHandle Handle, c
 	ACharacter* Character = Cast<ACharacter>(GetAvatarActorFromActorInfo());
 	if (Character)
 	{
-		UCharacterMovementComponent* Movement = Character->GetCharacterMovement();
-		if (Movement)
+		APlayerController* PC = Cast<APlayerController>(Character->GetController());
+
+		if (PC)
 		{
-			Movement->SetMovementMode(MOVE_Walking);
+			PC->SetIgnoreMoveInput(false);
 		}
+	}
+}
+
+AEnemyCharacter* UGA_MeleeAttack_Omni::FindNearestEnemy()
+{
+	TArray<AActor*> FoundEnemies;
+
+	UGameplayStatics::GetAllActorsOfClass(
+		GetWorld(),
+		TargetClass,
+		FoundEnemies
+	);
+
+	AEnemyCharacter* ClosestEnemy = nullptr;
+	float ClosestDistance = TNumericLimits<float>::Max();
+
+	FVector PlayerLocation = GetAvatarActorFromActorInfo()->GetActorLocation();
+
+	for (AActor* Actor : FoundEnemies)
+	{
+		if (!Actor)
+			continue;
+
+		float Distance = FVector::Dist(PlayerLocation, Actor->GetActorLocation());
+
+		if (Distance < ClosestDistance)
+		{
+			ClosestDistance = Distance;
+			ClosestEnemy = Cast<AEnemyCharacter>(Actor);
+		}
+	}
+
+	return ClosestEnemy;
+}
+
+void UGA_MeleeAttack_Omni::MovetoNearestEnemy()
+{
+	AEnemyCharacter* ClosestEnemy = FindNearestEnemy();
+	if (ClosestEnemy)
+	{
+		FVector EnemyLocation = ClosestEnemy->GetActorLocation();
+		FVector PlayerLocation = GetAvatarActorFromActorInfo()->GetActorLocation();
+
+		FVector Direction = (EnemyLocation - PlayerLocation).GetSafeNormal();
+
+		FVector TargetLocation = EnemyLocation - Direction * 100.f;
+
+		GetAvatarActorFromActorInfo()->SetActorLocation(TargetLocation);
 	}
 }
