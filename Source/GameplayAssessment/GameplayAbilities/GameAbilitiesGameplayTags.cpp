@@ -56,6 +56,7 @@ UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayEvent_Aim_Start, "Event.Aim.Start");
 UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayEvent_Aim_End, "Event.Aim.End");
 //HitType
 UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayEvent_Hit_Air, "Event.Hit.Air");
+UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayEvent_Hit_Down, "Event.Hit.Down");
 UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayEvent_Hit_Strong, "Event.Hit.Strong");
 
 //Weapon Tags

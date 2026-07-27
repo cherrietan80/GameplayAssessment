@@ -37,6 +37,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "UI")
 	void CreateHealthWidget();
 
+	UFUNCTION(BlueprintCallable)
+	void ApplyKnockback(const FVector& Direction, float Strength);
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
 	class UWidgetComponent* HealthBarComponent;

@@ -57,6 +57,7 @@ UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEvent_Aim_Start);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEvent_Aim_End);
 //HitType
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEvent_Hit_Air);
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEvent_Hit_Down);
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_GameplayEvent_Hit_Strong);
 
 //Weapon Tags

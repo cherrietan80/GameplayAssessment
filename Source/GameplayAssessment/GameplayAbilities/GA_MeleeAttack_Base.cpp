@@ -134,7 +134,7 @@ void UGA_MeleeAttack_Base::CalculateDamageAmount()
 	if (EquippedWeapon)
 	{
 		DamageAmount = BaseDamageAmount;
-		if (EquippedWeapon->CurrentHitEventTag == TAG_GameplayEvent_Hit_Strong)
+		if (EquippedWeapon->CurrentHitEventTag == TAG_GameplayEvent_Hit_Strong || EquippedWeapon->CurrentHitEventTag == TAG_GameplayEvent_Hit_Down)
 		{
 			DamageAmount = BaseDamageAmount * 2;
 		}

@@ -87,3 +87,8 @@ void AEnemyCharacter::DestroyActor()
     Destroy();
 }
 
+void AEnemyCharacter::ApplyKnockback(const FVector& Direction, float Strength)
+{
+	LaunchCharacter(Direction * Strength, true, true);
+}
+

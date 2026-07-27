@@ -6,6 +6,7 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "GameplayAssessmentCharacter.h"
 #include "GameplayAbilities/GameAbilitiesGameplayTags.h"
+#include "EnemyCharacter.h"
 
 // Sets default values
 ABaseWeapon::ABaseWeapon()
@@ -120,6 +121,16 @@ void ABaseWeapon::HitActor()
 						if (Character->bIsCritical)
 						{
 							Character->OnCriticalHit.Broadcast();
+						}
+					}
+
+					if (CurrentHitEventTag == TAG_GameplayEvent_Hit_Strong)
+					{
+						AEnemyCharacter* Enemy = Cast<AEnemyCharacter>(HitActor);
+						FVector Direction = (HitActor->GetActorLocation() - Character->GetActorLocation()).GetSafeNormal();
+						if (Enemy)
+						{
+							Enemy->ApplyKnockback(Direction, 1200.f);
 						}
 					}
 				}

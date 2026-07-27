@@ -38,7 +38,7 @@ void UGA_MeleeAttack_AirCombo::ActivateAbility(const FGameplayAbilitySpecHandle 
 
 	UAbilityTask_WaitGameplayEvent* KnockDownTask = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(
 		this,
-		TAG_GameplayEvent_Hit_Strong
+		TAG_GameplayEvent_Hit_Down
 	);
 
 	KnockDownTask->EventReceived.AddDynamic(
