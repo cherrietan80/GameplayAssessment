@@ -9,6 +9,7 @@
 #include "Weapons/WeaponManagerComponent.h"
 #include "Weapons/BaseWeapon.h"
 #include "AttributeSets/BasicAttributeSet.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 AEnemyCharacter::AEnemyCharacter()
 {
@@ -89,6 +90,32 @@ void AEnemyCharacter::DestroyActor()
 
 void AEnemyCharacter::ApplyKnockback(const FVector& Direction, float Strength)
 {
-	LaunchCharacter(Direction * Strength, true, true);
+	// Stop current animation
+	GetMesh()->GetAnimInstance()->StopAllMontages(0.1f);
+
+	FVector LaunchVelocity = Direction * Strength;
+	LaunchVelocity.Z = 800.f;
+
+	// First launch
+	LaunchCharacter(LaunchVelocity, true, true);
+
+	// Then stop normal movement logic
+	GetCharacterMovement()->SetMovementMode(MOVE_Flying);
+
+	FTimerHandle TimerHandle;
+
+	GetWorld()->GetTimerManager().SetTimer(
+		TimerHandle,
+		this,
+		&AEnemyCharacter::RecoverFromKnockback,
+		1.0f,
+		false
+	);
 }
+
+void AEnemyCharacter::RecoverFromKnockback()
+{
+	GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+}
+
 

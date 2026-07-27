@@ -18,6 +18,9 @@ public:
 	
 	/** Constructor */
 	AGameplayAssessmentGameMode();
+
+public:
+	void PlayHitSlowMotion(float TimeScale, float Duration);
 };
 
 

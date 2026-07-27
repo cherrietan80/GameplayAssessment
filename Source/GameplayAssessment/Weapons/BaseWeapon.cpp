@@ -7,6 +7,7 @@
 #include "GameplayAssessmentCharacter.h"
 #include "GameplayAbilities/GameAbilitiesGameplayTags.h"
 #include "EnemyCharacter.h"
+#include "GameplayAssessmentGameMode.h"
 
 // Sets default values
 ABaseWeapon::ABaseWeapon()
@@ -130,7 +131,12 @@ void ABaseWeapon::HitActor()
 						FVector Direction = (HitActor->GetActorLocation() - Character->GetActorLocation()).GetSafeNormal();
 						if (Enemy)
 						{
-							Enemy->ApplyKnockback(Direction, 1200.f);
+							Enemy->ApplyKnockback(Direction, 400.f);
+							AGameplayAssessmentGameMode* GameMode = GetWorld()->GetAuthGameMode<AGameplayAssessmentGameMode>();
+							if (GameMode)
+							{
+								GameMode->PlayHitSlowMotion(0.2f, 0.08f);
+							}
 						}
 					}
 				}

@@ -40,6 +40,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ApplyKnockback(const FVector& Direction, float Strength);
 
+	void RecoverFromKnockback();
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
 	class UWidgetComponent* HealthBarComponent;
