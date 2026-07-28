@@ -197,9 +197,7 @@ void ABaseCharacter::OnAirTagChanged(const FGameplayTag CallbackTag, int32 NewCo
 {
 	if (NewCount > 0)
 	{
-		// Enter airborne
-		LaunchCharacter(FVector(0, 0, 800), false, true);
-
+		ActivateAbilityByTag(TAG_Ability_AirLaunch);
 		GetCharacterMovement()->GravityScale = 0.f;
 		GetCharacterMovement()->SetMovementMode(MOVE_Flying);
 		GetCharacterMovement()->StopMovementImmediately();

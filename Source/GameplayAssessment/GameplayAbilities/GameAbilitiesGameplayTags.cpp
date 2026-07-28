@@ -32,6 +32,9 @@ UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_HitReaction, "GameplayAbility.HitReaction");
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Death, "GameplayAbility.Death");
 //Active
 UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_Active, "GameplayAbility.Active");
+//Air
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_AirLaunch, "GameplayAbility.AirLaunch");
+UE_DEFINE_GAMEPLAY_TAG(TAG_Ability_AirLaunch_Active, "GameplayAbility.AirLaunch..Active");
 
 //Gameplay Cues Tags
 UE_DEFINE_GAMEPLAY_TAG(TAG_GameplayCue_Dash, "GameplayCue.Dash");

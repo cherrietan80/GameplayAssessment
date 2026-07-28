@@ -85,4 +85,8 @@ public:
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
+public:
+	UPROPERTY(BlueprintReadWrite, Category = "Air Combat")
+	float AirComboHeight = 600.f;
+
 };

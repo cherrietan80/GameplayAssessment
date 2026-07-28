@@ -139,6 +139,14 @@ void ABaseWeapon::HitActor()
 							}
 						}
 					}
+					else if (CurrentHitEventTag == TAG_GameplayEvent_Hit_Air || CurrentHitEventTag == TAG_GameplayEvent_Hit_Down)
+					{
+						AGameplayAssessmentGameMode* GameMode = GetWorld()->GetAuthGameMode<AGameplayAssessmentGameMode>();
+						if (GameMode)
+						{
+							GameMode->PlayHitSlowMotion(0.2f, 0.08f);
+						}
+					}
 				}
 			}
 		}

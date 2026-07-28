@@ -9,6 +9,7 @@
 #include "Abilities/Tasks/AbilityTask_WaitDelay.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Character.h"
+#include "BaseCharacter.h"
 
 UGA_MeleeAttack_AirCombo::UGA_MeleeAttack_AirCombo()
 {
@@ -111,6 +112,17 @@ void UGA_MeleeAttack_AirCombo::HandleKnockUp(FGameplayEventData Payload)
 		return;
 	}
 
+	ABaseCharacter* EnemyChar = Cast<ABaseCharacter>(TargetEnemy);
+	ABaseCharacter* PlayerChar = Cast<ABaseCharacter>(GetAvatarActorFromActorInfo());
+
+	if (!EnemyChar or !PlayerChar)
+	{
+		return;
+	}
+	
+	EnemyChar->AirComboHeight = EnemyChar->GetActorLocation().Z + 400.f;
+	PlayerChar->AirComboHeight = EnemyChar->GetActorLocation().Z + 400.f;
+
 	FGameplayEffectContextHandle Context = EnemyASC->MakeEffectContext();
 
 	FGameplayEffectSpecHandle Spec = EnemyASC->MakeOutgoingSpec(
@@ -121,7 +133,12 @@ void UGA_MeleeAttack_AirCombo::HandleKnockUp(FGameplayEventData Payload)
 
 	EnemyAirHandle = EnemyASC->ApplyGameplayEffectSpecToSelf(*Spec.Data.Get());
 
-	ApplyPlayerAirEffect();
+	// Delay 0.3s before player goes up
+	UAbilityTask_WaitDelay* PlayerDelayTask = UAbilityTask_WaitDelay::WaitDelay(this, 0.3f);
+
+	PlayerDelayTask->OnFinish.AddDynamic(this, &UGA_MeleeAttack_AirCombo::ApplyPlayerAirEffect);
+
+	PlayerDelayTask->ReadyForActivation();
 }
 
 void UGA_MeleeAttack_AirCombo::HandleKnockDown(FGameplayEventData Payload)
