@@ -80,27 +80,63 @@ bool AEnemySpawner::GetRandomSpawnLocation(FVector& OutLocation)
 {
 	ACharacter* Player = UGameplayStatics::GetPlayerCharacter(this, 0);
 
-	if (!Player) return false;
+	if (!Player)
+		return false;
 
-	UNavigationSystemV1* NavSystem = UNavigationSystemV1::GetCurrent(GetWorld());
+	UNavigationSystemV1* NavSystem =
+		UNavigationSystemV1::GetCurrent(GetWorld());
 
-	if (!NavSystem) return false;
+	if (!NavSystem)
+		return false;
 
 	FVector Origin = Player->GetActorLocation();
 
-	FNavLocation RandomLocation;
-
-	bool bFound =
-		NavSystem->GetRandomReachablePointInRadius(
-			Origin,
-			SpawnRadius,
-			RandomLocation
-		);
-
-	if (bFound)
+	for (int32 i = 0; i < 10; i++)
 	{
-		OutLocation = RandomLocation.Location;
-		return true;
+		FNavLocation RandomLocation;
+
+		bool bFound =
+			NavSystem->GetRandomReachablePointInRadius(
+				Origin,
+				SpawnRadius,
+				RandomLocation
+			);
+
+		if (!bFound)
+			continue;
+
+
+		FVector TraceStart =
+			RandomLocation.Location + FVector(0, 0, 500);
+
+
+		FVector TraceEnd =
+			RandomLocation.Location - FVector(0, 0, 500);
+
+		FHitResult Hit;
+
+		FCollisionQueryParams Params;
+		Params.AddIgnoredActor(this);
+
+
+		bool bHit =
+			GetWorld()->LineTraceSingleByChannel(
+				Hit,
+				TraceStart,
+				TraceEnd,
+				ECC_Visibility,
+				Params
+			);
+
+		if (bHit)
+		{
+			OutLocation = Hit.Location;
+
+			// lift enemy capsule above ground
+			OutLocation.Z += 100.f;
+
+			return true;
+		}
 	}
 
 	return false;

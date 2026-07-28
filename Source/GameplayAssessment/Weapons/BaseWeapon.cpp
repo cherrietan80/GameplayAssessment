@@ -59,6 +59,15 @@ void ABaseWeapon::HitActor()
 		return;
 	}
 
+	AGameplayAssessmentCharacter* Character = Cast<AGameplayAssessmentCharacter>(OwnerActor);
+
+	if(!Character)
+	{
+		return;
+	}
+
+	Character->RefreshComboTimer();
+
 	FVector Start = TraceStart->GetComponentLocation();
 	FVector End = TraceEnd->GetComponentLocation();
 
@@ -115,7 +124,6 @@ void ABaseWeapon::HitActor()
 						EventData
 					);
 
-					AGameplayAssessmentCharacter* Character = Cast<AGameplayAssessmentCharacter>(OwnerActor);
 					if (Character)
 					{
 						Character->RegisterCombo();
